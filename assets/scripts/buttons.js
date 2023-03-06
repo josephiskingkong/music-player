@@ -8,7 +8,6 @@ const trackListButton = document.getElementById('track-list-button')
 function changeButtons() {
     playButton.classList.toggle('hidden')
     pauseButton.classList.toggle('hidden')
-    console.log('pizda')
 }
 
 function toStatic() {
