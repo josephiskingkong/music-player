@@ -4,6 +4,8 @@ const shuffleButton = document.getElementById('shuffle-button')
 const replayButton = document.getElementById('replay-button')
 const trackListMenu = document.getElementById('tracklist')
 const trackListButton = document.getElementById('track-list-button')
+const mobileMenu = document.getElementById('mobile-menu')
+const mobileMenuHeader = document.getElementById('mobile-menu-header')
 
 function changeButtons() {
     playButton.classList.toggle('hidden')
@@ -35,3 +37,7 @@ function openTrackList() {
 document.addEventListener('click', function(event) {
     if (!trackListMenu.contains(event.target) && !trackListButton.contains(event.target)) trackListMenu.classList.add('hidden');
   });
+
+mobileMenuHeader.onclick = function() {
+    mobileMenu.classList.toggle('active-mobile-menu')
+}

@@ -20,12 +20,15 @@
                          <div class="track-name-author-tracklist">
                             <h1 class="track-name-tracklist">Magnolia</h1>
                             <h2 class="track-author-tracklist">Playboi Carti</h2>
-                </div>
+                        </div>
                     </div>
 
                 </div>
             <div class="track-info">
-                <img src="/music-player/assets/images/carti-cover.jpeg" alt="carti-cover" class="track-cover">
+                <div class="track-cover-block">
+
+                    <img src="/music-player/assets/images/carti-cover.jpeg" alt="track-cover" class="track-cover">
+                </div>
                 <div class="track-name-author">
                     <h1 class="track-name">Magnolia</h1>
                     <h2 class="track-author">Playboi Carti</h2>
@@ -59,7 +62,7 @@
                 </div>
                 <div class="volume">
                     <input type="range" name="volume-bar" id="volume-bar" value="70" min="0" max="100" step="1">
-                    <button class="volume-button" onclick="activeVolumeBar()">
+                    <button class="volume-button">
                         <img src="/music-player/assets/images/volume-icon.png" style="width: 30px; height: 30px;" alt="volume-button">
                     </button>
                 </div>
@@ -70,6 +73,31 @@
                     <div class="track-duration"></div>
                 </div>
                 <input type="range" name="track-bar" id="track-bar" value="0" min="0" max="200" step="1">
+            </div>
+
+            <div class="mobile-menu" id="mobile-menu">
+                <div class="mobile-menu-header" id="mobile-menu-header">
+                    <button class="open-mobile-menu">
+
+                    </button>
+                </div>
+                <div class="mobile-settings">
+                    <h1 style="font-size: 36px; color: black; margin-bottom: 10px;">Settings</h1>
+                    <div class="volume-setting">
+                        <h2 style="font-size: 24px; color: black; font-weight: 500; margin-right: 10px;">Volume</h2>
+                        <input type="range" name="mobile-volume-bar" id="mobile-volume-bar" value="70" min="0" max="100" step="1">
+                    </div>
+                </div>
+                <div class="mobile-tracklist">
+                    <h1 style="font-size: 36px; color: black; margin-bottom: 10px;">Tracklist</h1>
+                    <div class="tracklist-track">
+                        <img src="/music-player/assets/images/carti-cover.jpeg" alt="carti-cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;">
+                         <div class="track-name-author-tracklist">
+                            <h1 class="track-name-tracklist">Magnolia</h1>
+                            <h2 class="track-author-tracklist">Playboi Carti</h2>
+                        </div>
+                    </div>
+                </div>
             </div>
             </div>
     </section>

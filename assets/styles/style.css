@@ -42,11 +42,14 @@ section {
     flex-direction: column;
 }
 
-.track-cover {
+.track-cover-block {
+    height: 300px;
     border-radius: 10px;
+}
+
+.track-cover {
     width: 300px;
     height: 300px;
-    margin-bottom: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.333);
     transition: 0.1s ease-in;
 }
@@ -156,7 +159,7 @@ section {
 
 input[type='range'] {
     overflow: hidden;
-    width: 30vw;
+    width: 300px;
     border-radius: 5px;
     height: 5px;
     appearance: none;
@@ -299,4 +302,115 @@ input[type='range']:hover {
 .tracklist-track:hover {
     background-color: #ebebeb;
     transition: all .1s ease-in;
+}
+
+.mobile-menu {
+    background-color: #ffffff;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    right: 0;
+    top: 95vh;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.333);
+    display: flex;
+    flex-direction: column;
+    transition: all .2s ease-in;
+}
+
+.mobile-menu-header {
+    display: flex;
+    height: 5vh;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    margin-bottom: 20px;
+}
+
+.active-mobile-menu {
+    top: 10vh;
+    transition: all .2s ease-in;
+}
+
+.open-mobile-menu {
+    width: 50px;
+    height: 10px;
+    border: none;
+    background-color: #e8e8e8;
+    border-radius: 10px;
+}
+
+.mobile-settings {
+    padding-inline: 20px;
+    margin-bottom: 30px;
+}
+
+#mobile-volume-bar {
+    margin-top: 5px;
+    height: 7px;
+    width: 150px;
+    background-color: #a2a2a2;
+    filter: invert();
+}
+
+.mobile-tracklist {
+    padding-inline: 20px;
+}
+
+.volume-setting {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+
+
+@media screen and (min-width: 700px) {
+    .mobile-menu {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .volume {
+        display: none !important;
+    }
+    .track-list {
+        display: none;
+    }
+    .background {
+        background-size: 300%;
+    }
+    .track-cover {
+        width: 250px;
+        height: 250px;
+    }
+    .track-cover-block {
+        height: 250px;
+        margin-bottom: 10px;
+    }
+    input[type='range'] {
+        width: 250px;
+    }
+    .buttons>button {
+        scale: 0.8;
+        padding-inline: 10px;
+    }
+    .track-menu {
+        padding-top: 10px;
+    }
+    .track-bar {
+        margin-top: 10px;
+    }
+  }
+
+@media screen and (max-width: 600px) {
+    .track-name {
+        font-size: 24px;
+    }
+    .track-author {
+        font-size: 14px;
+    }
 }
