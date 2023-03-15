@@ -36,7 +36,7 @@
             </div>
             <div class="track-menu">
                 <div class="track-list">
-                    <button class="tracklist-button" onclick="openTrackList()" id="track-list-button">
+                    <button class="tracklist-button" id="track-list-button">
                         <img src="/music-player/assets/images/tracklist-icon.png" style="width: 60px; height: 60px;" alt="volume-button">
                     </button>
                 </div>
@@ -61,7 +61,7 @@
                     </button>
                 </div>
                 <div class="volume">
-                    <input type="range" name="volume-bar" id="volume-bar" value="70" min="0" max="100" step="1">
+                    <input type="range" name="volume-bar" id="volume-bar" value="1" min="0" max="1" step="0.01">
                     <button class="volume-button">
                         <img src="/music-player/assets/images/volume-icon.png" style="width: 30px; height: 30px;" alt="volume-button">
                     </button>
@@ -72,7 +72,7 @@
                     <div class="current-time"></div>
                     <div class="track-duration"></div>
                 </div>
-                <input type="range" name="track-bar" id="track-bar" value="0" min="0" max="200" step="1">
+                <input type="range" name="track-bar" id="track-bar" value="1" min="0" max="100" step="1">
             </div>
 
             <div class="mobile-menu" id="mobile-menu">
@@ -85,7 +85,7 @@
                     <h1 style="font-size: 36px; color: black; margin-bottom: 10px;">Settings</h1>
                     <div class="volume-setting">
                         <h2 style="font-size: 24px; color: black; font-weight: 500; margin-right: 10px;">Volume</h2>
-                        <input type="range" name="mobile-volume-bar" id="mobile-volume-bar" value="70" min="0" max="100" step="1">
+                        <input type="range" name="mobile-volume-bar" id="mobile-volume-bar" value="1" min="0" max="1" step="0.01">
                     </div>
                 </div>
                 <div class="mobile-tracklist">
@@ -102,7 +102,7 @@
             </div>
     </section>
     <footer></footer>
-    <script src="assets/scripts/buttons.js"></script>
+    <script type="module" src="assets/scripts/buttons.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <script type="text/javascript">
 let bg = document.querySelector('.background');

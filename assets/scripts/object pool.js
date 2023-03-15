@@ -1,4 +1,4 @@
-class ObjectPool {
+export class ObjectPool {
     constructor(maxSize, objectFactory) {
       this.maxSize = maxSize;
       this.objectFactory = objectFactory;
