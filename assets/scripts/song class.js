@@ -29,12 +29,28 @@ export function createSong(title, artist, url) {
     return new Song (title, artist, url);
 }
 
-export function createDecoratedSong(Class, props) {
-    class DecoratedClass extends Class {
-        constructor(...args) {
-            super(...args);
-            Object.assign(this, props);
-        }
+export function createDecoratedSong(title, artist, url, props) {
+  /*class DecoratedClass extends Class {
+    constructor() {
+      super(...args);
+      Object.assign(this, props);
     }
-    return DecoratedClass;
+  }
+  return new DecoratedClass(props);
+  */
+ class DecoratedClass extends Song {
+  constructor(title, artist, url) {
+    super(title, artist, url)
+    Object.assign(this, props)
+  }
+
+  play() {
+    super.play()
+  }
+
+  pause() {
+    super.pause()
+  }
+ }
+ return new DecoratedClass(title, artist, url, props)
 }

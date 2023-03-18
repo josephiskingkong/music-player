@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="tracklist-track">
-                        <img src="/music-player/assets/images/led_zeppelin_immigrant.png" alt="immigrant song cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                        <img src="/music-player/assets/images/led_zeppelin_immigrant.jpg" alt="immigrant song cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
                          <div class="track-name-author-tracklist">
                             <h1 class="track-name-tracklist">Immigrant Song</h1>
                             <h2 class="track-author-tracklist">Led Zeppelin</h2>
@@ -146,7 +146,7 @@
                         </div>
                     </div>
                     <div class="tracklist-track">
-                        <img src="/music-player/assets/images/led_zeppelin_immigrant.png" alt="immigrant song cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                        <img src="/music-player/assets/images/led_zeppelin_immigrant.jpg" alt="immigrant song cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
                          <div class="track-name-author-tracklist">
                             <h1 class="track-name-tracklist">Immigrant Song</h1>
                             <h2 class="track-author-tracklist">Led Zeppelin</h2>
