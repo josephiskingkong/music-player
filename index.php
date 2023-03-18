@@ -16,13 +16,47 @@
             <div class="main-section">
                 <div class="tracklist-menu hidden" id="tracklist">
                     <div class="tracklist-track">
-                        <img src="/music-player/assets/images/carti-cover.jpeg" alt="carti-cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;">
+                        <img src="/music-player/assets/images/carti-cover.jpeg" alt="carti-cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
                          <div class="track-name-author-tracklist">
                             <h1 class="track-name-tracklist">Magnolia</h1>
                             <h2 class="track-author-tracklist">Playboi Carti</h2>
                         </div>
                     </div>
-
+                    <div class="tracklist-track">
+                        <img src="/music-player/assets/images/space_oddity_bowie.jpg" alt="space oddity cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                         <div class="track-name-author-tracklist">
+                            <h1 class="track-name-tracklist">Space Oddity</h1>
+                            <h2 class="track-author-tracklist">David Bowie</h2>
+                        </div>
+                    </div>
+                    <div class="tracklist-track">
+                        <img src="/music-player/assets/images/only_man_cover.jpg" alt="only man cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                         <div class="track-name-author-tracklist">
+                            <h1 class="track-name-tracklist">Only Man</h1>
+                            <h2 class="track-author-tracklist">Audio Bullys</h2>
+                        </div>
+                    </div>
+                    <div class="tracklist-track">
+                        <img src="/music-player/assets/images/led_zeppelin_immigrant.png" alt="immigrant song cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                         <div class="track-name-author-tracklist">
+                            <h1 class="track-name-tracklist">Immigrant Song</h1>
+                            <h2 class="track-author-tracklist">Led Zeppelin</h2>
+                        </div>
+                    </div>
+                    <div class="tracklist-track">
+                        <img src="/music-player/assets/images/sonic_youth_rocket.jpg" alt="silver rocket cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                         <div class="track-name-author-tracklist">
+                            <h1 class="track-name-tracklist">Silver Rocket</h1>
+                            <h2 class="track-author-tracklist">Sonic Youth</h2>
+                        </div>
+                    </div>
+                    <div class="tracklist-track">
+                        <img src="/music-player/assets/images/the_weeknd_alarm.jpg" alt="false alarm cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                         <div class="track-name-author-tracklist">
+                            <h1 class="track-name-tracklist">False Alarm</h1>
+                            <h2 class="track-author-tracklist">The Weeknd</h2>
+                        </div>
+                    </div>
                 </div>
             <div class="track-info">
                 <div class="track-cover-block">
@@ -91,12 +125,46 @@
                 <div class="mobile-tracklist">
                     <h1 style="font-size: 36px; color: black; margin-bottom: 10px;">Tracklist</h1>
                     <div class="tracklist-track">
-                        <img src="/music-player/assets/images/carti-cover.jpeg" alt="carti-cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;">
+                        <img src="/music-player/assets/images/carti-cover.jpeg" alt="carti-cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
                          <div class="track-name-author-tracklist">
                             <h1 class="track-name-tracklist">Magnolia</h1>
                             <h2 class="track-author-tracklist">Playboi Carti</h2>
                         </div>
                     </div>
+                    <div class="tracklist-track">
+                        <img src="/music-player/assets/images/space_oddity_bowie.jpg" alt="space oddity cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                         <div class="track-name-author-tracklist">
+                            <h1 class="track-name-tracklist">Space Oddity</h1>
+                            <h2 class="track-author-tracklist">David Bowie</h2>
+                        </div>
+                    </div>
+                    <div class="tracklist-track">
+                        <img src="/music-player/assets/images/only_man_cover.jpg" alt="only man cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                         <div class="track-name-author-tracklist">
+                            <h1 class="track-name-tracklist">Only Man</h1>
+                            <h2 class="track-author-tracklist">Audio Bullys</h2>
+                        </div>
+                    </div>
+                    <div class="tracklist-track">
+                        <img src="/music-player/assets/images/led_zeppelin_immigrant.png" alt="immigrant song cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                         <div class="track-name-author-tracklist">
+                            <h1 class="track-name-tracklist">Immigrant Song</h1>
+                            <h2 class="track-author-tracklist">Led Zeppelin</h2>
+                        </div>
+                    </div>
+                    <div class="tracklist-track">
+                        <img src="/music-player/assets/images/sonic_youth_rocket.jpg" alt="silver rocket cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                         <div class="track-name-author-tracklist">
+                            <h1 class="track-name-tracklist">Silver Rocket</h1>
+                            <h2 class="track-author-tracklist">Sonic Youth</h2>
+                        </div>
+                    </div>
+                    <div class="tracklist-track">
+                        <img src="/music-player/assets/images/the_weeknd_alarm.jpg" alt="false alarm cover" style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;" class=tracklist-cover>
+                         <div class="track-name-author-tracklist">
+                            <h1 class="track-name-tracklist">False Alarm</h1>
+                            <h2 class="track-author-tracklist">The Weeknd</h2>
+                        </div>
                 </div>
             </div>
             </div>
