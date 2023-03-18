@@ -14,6 +14,14 @@ const mobileMenuHeader = document.getElementById('mobile-menu-header')
 const trackBar = document.getElementById('track-bar')
 const volumeBar = document.getElementById('volume-bar')
 const mobileVolumeBar = document.getElementById('mobile-volume-bar')
+const trackListElements = document.getElementsByClassName('tracklist-track')
+const trackListCovers = document.getElementsByClassName('tracklist-cover')
+const trackListArtists = document.getElementsByClassName('track-author-tracklist')
+const trackListSongNames = document.getElementsByClassName('track-name-tracklist')
+const currentCover = document.getElementsByClassName('track-cover')
+const currentArtist = document.getElementsByClassName('track-author')
+const currentSongName = document.getElementsByClassName('track-name')
+const currentBackground = document.getElementsByClassName('background')
 
 const bareSongsPool = new ObjectPool(5, createSong);
 const magnolia = bareSongsPool.getObject("Magnolia", "Playboy Carti", '.\\assets\\tracks\\Playboi_Carti_Magnolia.mp3')
@@ -74,6 +82,15 @@ shuffleButton.onclick = function () {
 
 trackListButton.onclick = function() {
     trackListMenu.classList.toggle('hidden')
+}
+
+for (let elementIndex = 0; elementIndex < trackListElements.length; ++elementIndex) {
+    trackListElements[elementIndex].addEventListener('click', () => {
+        currentCover[0].src = trackListCovers[elementIndex].src
+        currentArtist[0].textContent = trackListArtists[elementIndex].textContent
+        currentSongName[0].textContent = trackListSongNames[elementIndex].textContent
+        currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[elementIndex].src + ')'
+    })
 }
 
 document.addEventListener('click', function(event) {
