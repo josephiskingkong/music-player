@@ -1,5 +1,7 @@
 import { ObjectPool } from './object pool.js';
 import { Song, createSong, createDecoratedSong } from './song class.js';
+import { SongWithClip } from './song with clip.js';
+import { SongWithText } from './song with text.js';
 
 const playButton = document.getElementById('play-button')
 const pauseButton = document.getElementById('pause-button')
@@ -30,60 +32,11 @@ const man = songsPool.getObject('Only Man', 'Audio Bullys', ".\\assets\\tracks\\
 const immigrant = songsPool.getObject('Immigrant Song', 'Led Zeppelin', ".\\assets\\tracks\\Led_Zeppelin_Immigrant_Song.mp3")
 const rocket = songsPool.getObject('Silver Rocket', 'Sonic Youth', ".\\assets\\tracks\\Sonic_Youth_Silver_Rocket.mp3")
 const alarm = songsPool.getObject('False Alarm', 'The Weeknd', ".\\assets\\tracks\\The_Weeknd_False_Alarm.mp3")
-    
-const playlist = {
-    0: magnolia, 
-    1: oddity, 
-    2: man, 
-    3: immigrant, 
-    4: rocket, 
-    5: alarm,
 
-    next() {
-        if (!playlist[currentSongIndex].isPlaying) {
-            paused = true
-        } else {
-            paused = false
-        }
-        playlist[currentSongIndex].pause()
-        playlist[currentSongIndex].audio.currentTime = 0
-        if (currentSongIndex === playlist.length - 1) {
-            currentSongIndex = 0
-        } else {
-            ++currentSongIndex
-        }
-        metaConfigure(currentSongIndex)
-        if (!paused) {
-            playlist[currentSongIndex].play()
-            changeButtons()
-        } 
-    },
-
-    previous() {
-        if (!playlist[currentSongIndex].isPlaying) {
-            paused = true
-        }
-        playlist[currentSongIndex].pause()
-        playlist[currentSongIndex].audio.currentTime = 0
-        if (currentSongIndex === 0) {
-            currentSongIndex = playlist.length - 1
-        } else {
-            --currentSongIndex
-        }
-        metaConfigure(currentSongIndex)
-        if (!paused) {
-            playlist[currentSongIndex].play()
-            changeButtons()
-        }
-    }
-}
-
+const playlist = [magnolia, oddity, man, immigrant, rocket, alarm]
 var currentSongIndex = 0;
 
 function metaConfigure(index) {
-    if (playlist[currentSongIndex].audio.loop = true) {
-        playlist[index].loop = true
-    }
     currentSongIndex = index
     currentCover[0].src = trackListCovers[index].src
     currentArtist[0].textContent = trackListArtists[index].textContent
@@ -96,67 +49,61 @@ function metaConfigure(index) {
 
 var paused
 
-// function playlist.playlist.playlist.next() {
-//     if (!playlist[currentSongIndex].isPlaying) {
-//         paused = true
-//     } else {
-//         paused = false
-//     }
-//     playlist[currentSongIndex].pause()
-//     playlist[currentSongIndex].audio.currentTime = 0
-//     if (currentSongIndex === playlist.length - 1) {
-//         currentSongIndex = 0
-//     } else {
-//         ++currentSongIndex
-//     }
-//     metaConfigure(currentSongIndex)
-//     if (!paused) {
-//         playlist[currentSongIndex].play()
-//         changeButtons()
-//     } 
-// }
+function next() {
+    if (playlist[currentSongIndex].isPaused) {
+        paused = true
+    }
+    playlist[currentSongIndex].pause()
+    playlist[currentSongIndex].audio.currentTime = 0
+    if (currentSongIndex === playlist.length - 1) {
+        currentSongIndex = 0
+    } else {
+        ++currentSongIndex
+    }
+    metaConfigure(currentSongIndex)
+    if (!paused) {
+        playlist[currentSongIndex].play()
+        changeButtons()
+    } 
+}
 
-// function previous() {
-//     if (!playlist[currentSongIndex].isPlaying) {
-//         paused = true
-//     }
-//     playlist[currentSongIndex].pause()
-//     playlist[currentSongIndex].audio.currentTime = 0
-//     if (currentSongIndex === 0) {
-//         currentSongIndex = playlist.length - 1
-//     } else {
-//         --currentSongIndex
-//     }
-//     metaConfigure(currentSongIndex)
-//     if (!paused) {
-//         playlist[currentSongIndex].play()
-//         changeButtons()
-//     }
-// }
+function previous() {
+    if (playlist[currentSongIndex].isPaused) {
+        paused = true
+    }
+    playlist[currentSongIndex].pause()
+    playlist[currentSongIndex].audio.currentTime = 0
+    if (currentSongIndex === 0) {
+        currentSongIndex = playlist.length - 1
+    } else {
+        --currentSongIndex
+    }
+    metaConfigure(currentSongIndex)
+    if (!paused) {
+        playlist[currentSongIndex].play()
+        changeButtons()
+    }
+}
 
 playlist.forEach(element => {
     element.audio.addEventListener("ended", (event) => {
-        playlist.next()
+        next()
         playlist[currentSongIndex].play()
     }) 
 });
 
 forwardButton.addEventListener('click', function() {
-    playlist.next()
+    next()
 })
 
 backButton.addEventListener('click', function() {
-    playlist.previous()
+    previous()
 })
 
 shuffleButton.addEventListener('click', function() {
     playlist[currentSongIndex].pause()
     playlist[currentSongIndex].audio.currentTime = 0
-    let destination = currentSongIndex
-    while (destination == currentSongIndex) {
-        destination = Math.floor(Math.random() * playlist.length)
-    }
-    metaConfigure(destination)
+    metaConfigure(Math.floor(Math.random() * playlist.length))
     playlist[currentSongIndex].play()
     changeButtons()
 })
@@ -179,40 +126,6 @@ pauseButton.onclick = function() {
     playlist[currentSongIndex].pause()
     changeButtons()
 }
-
-window.addEventListener('keypress', function (event) {
-    if (event.key === ' ') {
-        if (!playlist[currentSongIndex].isPlaying) {
-            playlist[currentSongIndex].play()
-        } else {
-            playlist[currentSongIndex].pause()
-        }
-        changeButtons()
-    } else if (event.key === 'k') {
-        previous()
-    } else if (event.key === 'l') {
-        playlist.next()
-    } else if (event.key === 'j') {
-        playlist[currentSongIndex].pause()
-        playlist[currentSongIndex].audio.currentTime = 0
-        let destination = currentSongIndex
-        while (destination == currentSongIndex) {
-            destination = Math.floor(Math.random() * playlist.length)
-        }
-        metaConfigure(destination)
-        playlist[currentSongIndex].play()
-        changeButtons()
-    } else if (event.key === ';') {
-        replayButton.classList.toggle('static-replay')
-        playlist[currentSongIndex].audio.loop = true
-    }
-})
-
-document.querySelectorAll("button").forEach( function(item) {
-    item.addEventListener('focus', function() {
-        this.blur();
-    })
-})
 
 trackBar.addEventListener('input', () => {
     const seekTime = playlist[currentSongIndex].audio.duration * (trackBar.value / 100)

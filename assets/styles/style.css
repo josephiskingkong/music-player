@@ -45,40 +45,104 @@ section {
 .track-cover-block {
     height: 300px;
     border-radius: 10px;
-}
-
-.track-cover {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .track-cover {
     width: 300px;
     height: 300px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.333);
-    transition: 0.1s ease-in;
-}
-
-.track-info {
+    transition: 0.5s ease-in-out;
+    transform-style: preserve-3d;
+    overflow: hidden;
+    object-fit: cover;
+  }
+  
+  .track-cover-block:hover .track-cover {
+    transform: rotateY(180deg);
+    filter: blur(1px) brightness(0.5);
+  }
+  
+  .track-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.333);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .lyrics {
+    padding-top: 10px;
+    padding-inline: 10px;
+    text-align: center;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .track-cover-block:hover .track-back {
+    transform: rotateY(0deg);
+    opacity: 1;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .track-cover-block:hover .lyrics {
+    transform: rotateY(0deg);
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .track-cover-block:hover .track-back {
+    display: flex;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .lyrics {
+    text-align: left;
+    transform: rotateY(180deg);
+    transition: all 0.5s ease-in-out;
+    overflow: scroll;
+    height: 100%;
+  }
+  
+  .lyrics h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .track-info {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.track-name {
+  }
+  
+  .track-name {
     position: relative;
     font-size: 30px;
-}
-
-.track-author {
+  }
+  
+  .track-author {
     position: relative;
     font-weight: 200;
     font-size: 16px;
-}
-
-.track-name-author {
+  }
+  
+  .track-name-author {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-.track-menu {
+  }
+  
+  .track-menu {
     position: relative;
     padding-top: 25px;
     display: flex;
@@ -86,8 +150,8 @@ section {
     align-items: center;
     justify-content: center;
     width: 100vw;
-}
-
+  }
+  
 .buttons>button>img {
     width: 50px;
     height: 50px;
@@ -100,11 +164,6 @@ section {
     transition: 0.1s ease-in;
     opacity: 1;
     scale: 1.1;
-}
-
-.track-cover:hover {
-    transform: scale(1.025);
-    transition: 0.1s ease-in;
 }
 
 #replay-button>img:hover {
@@ -273,6 +332,7 @@ input[type='range']:hover {
     background-color: #ffffff;
     z-index: 999;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.333);
+    overflow: scroll;
 }
 
 .tracklist-track {
@@ -342,7 +402,8 @@ input[type='range']:hover {
 
 .mobile-settings {
     padding-inline: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 #mobile-volume-bar {
@@ -355,7 +416,15 @@ input[type='range']:hover {
 
 .mobile-tracklist {
     padding-inline: 20px;
+    overflow: scroll;
 }
+
+
+.track-cover-block {
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+
 
 .volume-setting {
     display: flex;
@@ -363,9 +432,7 @@ input[type='range']:hover {
     align-items: center;
     justify-content: space-between;
 }
-
-
-
+  
 
 @media screen and (min-width: 700px) {
     .mobile-menu {
@@ -412,5 +479,24 @@ input[type='range']:hover {
     }
     .track-author {
         font-size: 14px;
+    }
+}
+
+
+@media screen and (max-width: 500px) {
+    .track-name-tracklist {
+        font-size: 24px;
+    }
+    .track-author-tracklist {
+        font-size: 16px;
+    }
+    .mobile-tracklist h1 {
+        font-size: 30px;
+    }
+    .volume-setting h2 {
+        font-size: 18px;
+    }
+    .mobile-settings h1 {
+        font-size: 30px;
     }
 }
