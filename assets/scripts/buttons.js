@@ -1,7 +1,5 @@
 import { ObjectPool } from './object pool.js';
 import { Song, createSong, createDecoratedSong } from './song class.js';
-import { SongWithClip } from './song with clip.js';
-import { SongWithText } from './song with text.js';
 
 const playButton = document.getElementById('play-button')
 const pauseButton = document.getElementById('pause-button')
@@ -32,78 +30,138 @@ const man = songsPool.getObject('Only Man', 'Audio Bullys', ".\\assets\\tracks\\
 const immigrant = songsPool.getObject('Immigrant Song', 'Led Zeppelin', ".\\assets\\tracks\\Led_Zeppelin_Immigrant_Song.mp3")
 const rocket = songsPool.getObject('Silver Rocket', 'Sonic Youth', ".\\assets\\tracks\\Sonic_Youth_Silver_Rocket.mp3")
 const alarm = songsPool.getObject('False Alarm', 'The Weeknd', ".\\assets\\tracks\\The_Weeknd_False_Alarm.mp3")
+const nostylist = songsPool.getObject('NO STYLIST', 'Destroy Lonely', ".\\assets\\tracks\\Destroy Lonely - NOSTYLIST (Official Audio).mp3")
+const wannarock = songsPool.getObject('I Just Wanna Rock', 'Lil Uzi Vert', ".\\assets\\tracks\\Lil Uzi Vert - Just Wanna Rock [Official Visualizer].mp3")
+const grid = songsPool.getObject('Off The Grid (Remix)', 'Playboi Carti', ".\\assets\\tracks\\Playboi Carti - Off the Grid (Remix) (Tiktok Viral Song).mp3")
+const cooler = songsPool.getObject('Cooler Than Me', 'Lancey Foux', ".\\assets\\tracks\\Lancey Foux - Cooler Than Me (Visualiser).mp3")
 
-const playlist = [magnolia, oddity, man, immigrant, rocket, alarm]
-var currentSongIndex = 0;
+let currentSongIndex = 0
+let songsAmount = 10
+let paused = false
+let newSongIndex
 
-function metaConfigure(index) {
-    currentSongIndex = index
-    currentCover[0].src = trackListCovers[index].src
-    currentArtist[0].textContent = trackListArtists[index].textContent
-    currentSongName[0].textContent = trackListSongNames[index].textContent
-    currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[index].src + ')'
+const playlist = {
+    0: magnolia, 
+    1: oddity, 
+    2: man, 
+    3: immigrant, 
+    4: rocket, 
+    5: alarm,
+    6: nostylist,
+    7: wannarock,
+    8: grid,
+    9: cooler,
+
+    
+    [Symbol.iterator]() {
+        return this
+    },
+
+    next() {
+        let done = false
+        if (currentSongIndex === songsAmount - 1) {
+            done = true
+        }
+
+        if (!playlist[currentSongIndex].isPlaying) {
+            paused = true
+        } else {
+            paused = false
+        }
+
+        playlist[currentSongIndex].pause()
+        playlist[currentSongIndex].audio.currentTime = 0
+
+        if (done) {
+            newSongIndex = 0
+            metaConfigure(currentSongIndex, newSongIndex)
+            if (!paused) {
+                playlist[currentSongIndex].play()
+                changeButtons()
+            } 
+            return { done: true }
+        } else {
+            newSongIndex = currentSongIndex + 1
+            metaConfigure(currentSongIndex, newSongIndex)
+            if (!paused) {
+                playlist[currentSongIndex].play()
+                changeButtons()
+            } 
+            return { done, value: playlist[currentSongIndex] } 
+        }
+    },
+
+    previous() {
+        if (!playlist[currentSongIndex].isPlaying) {
+            paused = true
+        }
+
+        playlist[currentSongIndex].pause()
+        playlist[currentSongIndex].audio.currentTime = 0
+
+        if (currentSongIndex === 0) {
+            newSongIndex = songsAmount- 1
+        } else {
+            newSongIndex = currentSongIndex - 1 
+        }
+        metaConfigure(currentSongIndex, newSongIndex)
+        if (!paused) {
+            playlist[currentSongIndex].play()
+            changeButtons()
+        }
+    }
+}
+
+function metaConfigure(oldIndex, newIndex) {
+    if (playlist[oldIndex].audio.loop === true) {
+        playlist[oldIndex].audio.loop = false
+        playlist[newIndex].loop = true
+    }
+    currentSongIndex = newIndex
+    currentCover[0].src = trackListCovers[currentSongIndex].src
+    currentArtist[0].textContent = trackListArtists[currentSongIndex].textContent
+    currentSongName[0].textContent = trackListSongNames[currentSongIndex].textContent
+    currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[currentSongIndex].src + ')'
     if (playButton.classList.contains('hidden') && !playlist[currentSongIndex].paused) {
         changeButtons()   
     }
 }
 
-var paused
-
-function next() {
-    if (playlist[currentSongIndex].isPaused) {
-        paused = true
-    }
-    playlist[currentSongIndex].pause()
-    playlist[currentSongIndex].audio.currentTime = 0
-    if (currentSongIndex === playlist.length - 1) {
-        currentSongIndex = 0
-    } else {
-        ++currentSongIndex
-    }
-    metaConfigure(currentSongIndex)
-    if (!paused) {
-        playlist[currentSongIndex].play()
-        changeButtons()
-    } 
-}
-
-function previous() {
-    if (playlist[currentSongIndex].isPaused) {
-        paused = true
-    }
-    playlist[currentSongIndex].pause()
-    playlist[currentSongIndex].audio.currentTime = 0
-    if (currentSongIndex === 0) {
-        currentSongIndex = playlist.length - 1
-    } else {
-        --currentSongIndex
-    }
-    metaConfigure(currentSongIndex)
-    if (!paused) {
-        playlist[currentSongIndex].play()
-        changeButtons()
-    }
-}
-
-playlist.forEach(element => {
-    element.audio.addEventListener("ended", (event) => {
-        next()
+for (let element of playlist) {
+    element.audio.addEventListener("ended", (event) => {    
+        playlist.next()
         playlist[currentSongIndex].play()
     }) 
-});
+    element.audio.addEventListener('timeupdate', () => {
+        const currentTime = playlist[currentSongIndex].audio.currentTime
+        const duration = playlist[currentSongIndex].audio.duration
+        const progress = (currentTime / duration) * 100
+        trackBar.value = progress
+    })
+    element.audio.addEventListener('volumechange', () => {
+        volumeBar.value = playlist[currentSongIndex].audio.volume 
+    })
+    element.audio.addEventListener('volumechange', () => {
+        mobileVolumeBar.value = playlist[currentSongIndex].audio.volume 
+    })
+}
 
 forwardButton.addEventListener('click', function() {
-    next()
+    playlist.next()
 })
 
 backButton.addEventListener('click', function() {
-    previous()
+    playlist.previous()
 })
 
 shuffleButton.addEventListener('click', function() {
     playlist[currentSongIndex].pause()
     playlist[currentSongIndex].audio.currentTime = 0
-    metaConfigure(Math.floor(Math.random() * playlist.length))
+    let destination = currentSongIndex
+    while (destination == currentSongIndex) {
+        destination = Math.floor(Math.random() * songsAmount - 1)
+    }
+    metaConfigure(currentSongIndex, destination)
     playlist[currentSongIndex].play()
     changeButtons()
 })
@@ -127,38 +185,51 @@ pauseButton.onclick = function() {
     changeButtons()
 }
 
+window.addEventListener('keypress', function (event) {
+    if (event.key === ' ') {
+        if (!playlist[currentSongIndex].isPlaying) {
+            playlist[currentSongIndex].play()
+        } else {
+            playlist[currentSongIndex].pause()
+        }
+        changeButtons()
+    } else if (event.key === 'k') {
+        playlist.previous()
+    } else if (event.key === 'l') {
+        playlist.next()
+    } else if (event.key === 'j') {
+        playlist[currentSongIndex].pause()
+        playlist[currentSongIndex].audio.currentTime = 0
+        let destination = currentSongIndex
+        while (destination == currentSongIndex) {
+            destination = Math.floor(Math.random() * songsAmount)
+        }
+        metaConfigure(currentSongIndex, destination)
+        playlist[currentSongIndex].play()
+        changeButtons()
+    } else if (event.key === ';') {
+        replayButton.classList.toggle('static-replay')
+        playlist[currentSongIndex].audio.loop = true
+    }
+})
+
+document.querySelectorAll("button").forEach( function(item) {
+    item.addEventListener('focus', function() {
+        this.blur();
+    })
+})
+
 trackBar.addEventListener('input', () => {
     const seekTime = playlist[currentSongIndex].audio.duration * (trackBar.value / 100)
     playlist[currentSongIndex].audio.currentTime = seekTime
-})
-
-playlist.forEach(element => {
-    element.audio.addEventListener('timeupdate', () => {
-        const currentTime = playlist[currentSongIndex].audio.currentTime
-        const duration = playlist[currentSongIndex].audio.duration
-        const progress = (currentTime / duration) * 100
-        trackBar.value = progress
-    })
 })
 
 volumeBar.addEventListener('input', () => {
     playlist[currentSongIndex].audio.volume = volumeBar.value
 })
 
-playlist.forEach(element => {
-    element.audio.addEventListener('volumechange', () => {
-        volumeBar.value = playlist[currentSongIndex].audio.volume 
-    })
-})
-
 mobileVolumeBar.addEventListener('input', () => {
     playlist[currentSongIndex].audio.volume = mobileVolumeBar.value
-})
-
-playlist.forEach(element => {
-    element.audio.addEventListener('volumechange', () => {
-        mobileVolumeBar.value = playlist[currentSongIndex].audio.volume 
-    })
 })
 
 replayButton.onclick = function () {
@@ -174,7 +245,7 @@ for (let elementIndex = 0; elementIndex < trackListElements.length; ++elementInd
     trackListElements[elementIndex].addEventListener('click', () => {
     playlist[currentSongIndex].pause()
     playlist[currentSongIndex].audio.currentTime = 0
-    metaConfigure(elementIndex)
+    metaConfigure(currentSongIndex, elementIndex)
     playlist[currentSongIndex].play()
     changeButtons()})
 }

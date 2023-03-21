@@ -103,8 +103,8 @@
                         style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;"
                         class=tracklist-cover>
                     <div class="track-name-author-tracklist">
-                        <h1 class="track-name-tracklist">Lancey Foux</h1>
-                        <h2 class="track-author-tracklist">Cooler Than Me</h2>
+                        <h1 class="track-name-tracklist">Cooler Than Me</h1>
+                        <h2 class="track-author-tracklist">Lancey Foux</h2>
                     </div>
                 </div>
             </div>
