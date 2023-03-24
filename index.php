@@ -116,18 +116,7 @@
                     </div>
                     <div class="track-back">
                         <div class="lyrics">
-                            <h1>In New York I Milly Rock (Rock)<br>
-                                Hide it in my sock (Sock)<br>
-                                Running from an opp (Opp)<br>
-                                And I shoot at opp (Opp), uh, uh (What?)<br>
-                                And I'm on the block (What?), uh, uh (What? What?)<br>
-                                And I'm on the block (What?)<br>
-                                In New York I Milly Rock (Hello?)<br>
-                                Hide it in my sock (What?)<br>
-                                Hide it in my sock (What?)<br>
-                                Selling that rerock (What? Woah, what? What? Uh, what? What?)<br>
-                                In New York I Milly Rock (Ooh)<br>
-                                Hide it in my sock (Woah)<br>
+                            <h1 id="lyrics-header">
                             </h1>
                         </div>
                     </div>

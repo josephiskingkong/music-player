@@ -18,14 +18,15 @@ const trackListElements = document.getElementsByClassName('tracklist-track')
 const trackListCovers = document.getElementsByClassName('tracklist-cover')
 const trackListArtists = document.getElementsByClassName('track-author-tracklist')
 const trackListSongNames = document.getElementsByClassName('track-name-tracklist')
+const trackText = document.getElementById('lyrics-header')
 const currentCover = document.getElementsByClassName('track-cover')
 const currentArtist = document.getElementsByClassName('track-author')
 const currentSongName = document.getElementsByClassName('track-name')
 const currentBackground = document.getElementsByClassName('background')
 
 const songsPool = new ObjectPool(6, createDecoratedSong);
-const magnolia = songsPool.getObject('Magnolia', 'Playboi Carti', ".\\assets\\tracks\\Playboi_Carti_Magnolia.mp3")
-const oddity = songsPool.getObject('Space Oddity', 'David Bowie', ".\\assets\\tracks\\David_Bowie_Space_Oddity.mp3")
+const magnolia = songsPool.getObject('Magnolia', 'Playboi Carti', ".\\assets\\tracks\\Playboi_Carti_Magnolia.mp3", {text: ".\\assets\\texts\\Magnolia.txt"})
+const oddity = songsPool.getObject('Space Oddity', 'David Bowie', ".\\assets\\tracks\\David_Bowie_Space_Oddity.mp3", {text: ".\\assets\\texts\\Space Oddity.txt"})
 const man = songsPool.getObject('Only Man', 'Audio Bullys', ".\\assets\\tracks\\Audio_Bullys_Only_Man.mp3")
 const immigrant = songsPool.getObject('Immigrant Song', 'Led Zeppelin', ".\\assets\\tracks\\Led_Zeppelin_Immigrant_Song.mp3")
 const rocket = songsPool.getObject('Silver Rocket', 'Sonic Youth', ".\\assets\\tracks\\Sonic_Youth_Silver_Rocket.mp3")
@@ -38,7 +39,7 @@ const cooler = songsPool.getObject('Cooler Than Me', 'Lancey Foux', ".\\assets\\
 let currentSongIndex = 0
 let songsAmount = 10
 let paused = false
-let newSongIndex
+let newSongIndex = Number
 
 const playlist = {
     0: magnolia, 
@@ -69,10 +70,19 @@ const playlist = {
             paused = false
         }
 
-        playlist[currentSongIndex].pause()
-        playlist[currentSongIndex].audio.currentTime = 0
-
-        if (done) {
+        if (shuffleButton.classList.contains('static')) {
+            newSongIndex = -1
+            while (newSongIndex === currentSongIndex || newSongIndex === -1) {
+                newSongIndex = Math.floor(Math.random() * (songsAmount))
+            }
+            alert(newSongIndex)
+            metaConfigure(currentSongIndex, newSongIndex)
+            if (!paused) {
+                playlist[currentSongIndex].play()
+                changeButtons()
+            }
+            return { done, value: playlist[currentSongIndex] }
+        } else if (done) {
             newSongIndex = 0
             metaConfigure(currentSongIndex, newSongIndex)
             if (!paused) {
@@ -86,7 +96,7 @@ const playlist = {
             if (!paused) {
                 playlist[currentSongIndex].play()
                 changeButtons()
-            } 
+            }
             return { done, value: playlist[currentSongIndex] } 
         }
     },
@@ -94,12 +104,17 @@ const playlist = {
     previous() {
         if (!playlist[currentSongIndex].isPlaying) {
             paused = true
+        } else {
+            paused = false
         }
 
-        playlist[currentSongIndex].pause()
-        playlist[currentSongIndex].audio.currentTime = 0
-
-        if (currentSongIndex === 0) {
+        if (shuffleButton.classList.contains('static')) {
+            newSongIndex = -1
+            while (newSongIndex === currentSongIndex || newSongIndex === -1) {
+                newSongIndex = Math.floor(Math.random() * (songsAmount))
+            }
+            alert(newSongIndex)
+        } else if (currentSongIndex === 0) {
             newSongIndex = songsAmount- 1
         } else {
             newSongIndex = currentSongIndex - 1 
@@ -112,26 +127,56 @@ const playlist = {
     }
 }
 
+function getTextFromFile(filepath) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', filepath, false);
+    xhr.send();
+  
+    if (xhr.status === 200) {
+      return xhr.responseText;
+    } else {
+      throw new Error('Error loading file');
+    }
+}
+
 function metaConfigure(oldIndex, newIndex) {
-    if (playlist[oldIndex].audio.loop === true) {
+    playlist[currentSongIndex].pause()
+    playlist[currentSongIndex].audio.currentTime = 0
+
+    if (replayButton.classList.contains('static-replay')) {
         playlist[oldIndex].audio.loop = false
-        playlist[newIndex].loop = true
+        playlist[newIndex].audio.loop = true
     }
     currentSongIndex = newIndex
-    currentCover[0].src = trackListCovers[currentSongIndex].src
-    currentArtist[0].textContent = trackListArtists[currentSongIndex].textContent
-    currentSongName[0].textContent = trackListSongNames[currentSongIndex].textContent
-    currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[currentSongIndex].src + ')'
-    if (playButton.classList.contains('hidden') && !playlist[currentSongIndex].paused) {
+    currentCover[0].src = trackListCovers[newIndex].src
+    currentArtist[0].textContent = trackListArtists[newIndex].textContent
+    currentSongName[0].textContent = trackListSongNames[newIndex].textContent
+    currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[newIndex].src + ')'
+    
+    if (playlist[currentSongIndex].text !== undefined) {
+        trackText.innerHTML =  getTextFromFile(playlist[currentSongIndex].text)
+    } else {
+        trackText.innerHTML = playlist[currentSongIndex].title + "<br>" + playlist[currentSongIndex].artist
+    }
+
+    if (playButton.classList.contains('hidden') && !playlist[newIndex].paused) {
         changeButtons()   
     }
 }
 
-for (let element of playlist) {
-    element.audio.addEventListener("ended", (event) => {    
+playlist[0].audio.addEventListener('timeupdate', () => {
+    const currentTime = playlist[currentSongIndex].audio.currentTime
+    const duration = playlist[currentSongIndex].audio.duration
+    const progress = (currentTime / duration) * 100
+    trackBar.value = progress
+})
+playlist[0].audio.addEventListener("ended", () => {
+    if (!replayButton.classList.contains('static-replay')) {
         playlist.next()
-        playlist[currentSongIndex].play()
-    }) 
+    }
+    playlist[currentSongIndex].play()
+}) 
+for (let element of playlist) {
     element.audio.addEventListener('timeupdate', () => {
         const currentTime = playlist[currentSongIndex].audio.currentTime
         const duration = playlist[currentSongIndex].audio.duration
@@ -144,6 +189,12 @@ for (let element of playlist) {
     element.audio.addEventListener('volumechange', () => {
         mobileVolumeBar.value = playlist[currentSongIndex].audio.volume 
     })
+    element.audio.addEventListener("ended", () => {
+        if (!replayButton.classList.contains('static-replay')) {
+            playlist.next()
+        }
+        playlist[currentSongIndex].play()
+    }) 
 }
 
 forwardButton.addEventListener('click', function() {
@@ -155,24 +206,12 @@ backButton.addEventListener('click', function() {
 })
 
 shuffleButton.addEventListener('click', function() {
-    playlist[currentSongIndex].pause()
-    playlist[currentSongIndex].audio.currentTime = 0
-    let destination = currentSongIndex
-    while (destination == currentSongIndex) {
-        destination = Math.floor(Math.random() * songsAmount - 1)
-    }
-    metaConfigure(currentSongIndex, destination)
-    playlist[currentSongIndex].play()
-    changeButtons()
+    shuffleButton.classList.toggle('static')
 })
 
 function changeButtons() {
     playButton.classList.toggle('hidden')
     pauseButton.classList.toggle('hidden')
-}
-
-function toStatic() {
-    playButton.classList.toggle('static')
 }
 
 playButton.onclick = function() {
@@ -198,18 +237,14 @@ window.addEventListener('keypress', function (event) {
     } else if (event.key === 'l') {
         playlist.next()
     } else if (event.key === 'j') {
-        playlist[currentSongIndex].pause()
-        playlist[currentSongIndex].audio.currentTime = 0
-        let destination = currentSongIndex
-        while (destination == currentSongIndex) {
-            destination = Math.floor(Math.random() * songsAmount)
-        }
-        metaConfigure(currentSongIndex, destination)
-        playlist[currentSongIndex].play()
-        changeButtons()
+        shuffleButton.classList.toggle('static')
     } else if (event.key === ';') {
         replayButton.classList.toggle('static-replay')
-        playlist[currentSongIndex].audio.loop = true
+        if (playlist[currentSongIndex].audio.loop) {
+            playlist[currentSongIndex].audio.loop = false
+        } else {
+            playlist[currentSongIndex].audio.loop = true
+        }
     }
 })
 
@@ -233,8 +268,13 @@ mobileVolumeBar.addEventListener('input', () => {
 })
 
 replayButton.onclick = function () {
+    if (replayButton.classList.contains('static-replay')) {
+        playlist[currentSongIndex].audio.loop = false
+        
+    } else {
+        playlist[currentSongIndex].audio.loop = true
+    }
     replayButton.classList.toggle('static-replay')
-    playlist[currentSongIndex].audio.loop = true
 }
 
 trackListButton.onclick = function() {
