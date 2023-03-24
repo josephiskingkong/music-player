@@ -6,6 +6,7 @@ export class Song {
       this.audio = new Audio(url);
       this.isPlaying = false;
       this.isPaused = false;
+      this.audio.loop = false
     }
   
     play() {
@@ -30,14 +31,6 @@ export function createSong(title, artist, url) {
 }
 
 export function createDecoratedSong(title, artist, url, props) {
-  /*class DecoratedClass extends Class {
-    constructor() {
-      super(...args);
-      Object.assign(this, props);
-    }
-  }
-  return new DecoratedClass(props);
-  */
  class DecoratedClass extends Song {
   constructor(title, artist, url) {
     super(title, artist, url)
