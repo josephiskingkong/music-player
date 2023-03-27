@@ -5,7 +5,7 @@
     overflow: hidden;
 }
 
-.background{
+.background {
     content: '';
 
     position: absolute;
@@ -47,9 +47,9 @@ section {
     border-radius: 10px;
     position: relative;
     overflow: hidden;
-  }
-  
-  .track-cover {
+}
+
+.track-cover {
     width: 300px;
     height: 300px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.333);
@@ -57,14 +57,14 @@ section {
     transform-style: preserve-3d;
     overflow: hidden;
     object-fit: cover;
-  }
-  
-  .track-cover-block:hover .track-cover {
+}
+
+.track-cover-block:hover .track-cover {
     transform: rotateY(180deg);
     filter: blur(1px) brightness(0.5);
-  }
-  
-  .track-back {
+}
+
+.track-back {
     position: absolute;
     top: 0;
     left: 0;
@@ -79,70 +79,75 @@ section {
     z-index: 1;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
-  }
-  
-  .lyrics {
+}
+
+.lyrics {
     padding-top: 10px;
     padding-inline: 10px;
     text-align: center;
-    transition: all 0.5s ease-in-out;
-  }
-  
-  .track-cover-block:hover .track-back {
+}
+
+.track-cover-block:hover .track-back {
     transform: rotateY(0deg);
     opacity: 1;
     transition: all 0.5s ease-in-out;
-  }
-  
-  .track-cover-block:hover .lyrics {
+}
+
+.track-cover-block:hover .lyrics {
     transform: rotateY(0deg);
     transition: all 0.5s ease-in-out;
-  }
-  
-  .track-cover-block:hover .track-back {
+}
+
+.track-cover-block:hover .track-back {
     display: flex;
     transition: all 0.5s ease-in-out;
-  }
-  
-  .lyrics {
+}
+
+.lyrics {
     text-align: left;
     transform: rotateY(180deg);
     transition: all 0.5s ease-in-out;
     overflow: scroll;
     height: 100%;
-  }
-  
-  .lyrics h1 {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.lyrics::-webkit-scrollbar {
+    display: none;
+}
+
+.lyrics h1 {
     font-size: 20px;
     margin-bottom: 15px;
-  }
-  
-  .track-info {
+}
+
+.track-info {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  
-  .track-name {
+}
+
+.track-name {
     position: relative;
     font-size: 30px;
-  }
-  
-  .track-author {
+}
+
+.track-author {
     position: relative;
     font-weight: 200;
     font-size: 16px;
-  }
-  
-  .track-name-author {
+}
+
+.track-name-author {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  
-  .track-menu {
+}
+
+.track-menu {
     position: relative;
     padding-top: 25px;
     display: flex;
@@ -150,8 +155,8 @@ section {
     align-items: center;
     justify-content: center;
     width: 100vw;
-  }
-  
+}
+
 .buttons>button>img {
     width: 50px;
     height: 50px;
@@ -209,10 +214,12 @@ section {
     margin-top: 25px;
 }
 
-.range_container{
+.range_container {
     position: relative;
-    width: 80px; /*input range width*/
-    height: 10px; /*input range height*/
+    width: 80px;
+    /*input range width*/
+    height: 10px;
+    /*input range height*/
     overflow: hidden;
 }
 
@@ -241,6 +248,7 @@ input[type='range']::-webkit-slider-thumb {
 input[type="range"]::-moz-range-progress {
     opacity: 1;
 }
+
 input[type="range"]::-ms-fill-lower {
     opacity: 1;
 }
@@ -335,6 +343,10 @@ input[type='range']:hover {
     overflow: scroll;
 }
 
+.tracklist-menu::-webkit-scrollbar {
+    display: none;
+}
+
 .tracklist-track {
     display: flex;
     flex-direction: row;
@@ -347,13 +359,15 @@ input[type='range']:hover {
     display: none;
 }
 
-.track-name-tracklist, .track-author-tracklist {
+.track-name-tracklist,
+.track-author-tracklist {
     color: black;
 }
 
 .track-name-tracklist {
     font-size: 24px;
 }
+
 .track-author-tracklist {
     font-size: 16px;
     font-weight: 200;
@@ -419,11 +433,15 @@ input[type='range']:hover {
     overflow: scroll;
 }
 
+.mobile-tracklist::-webkit-scrollbar {
+    display: none;
+}
+
 
 .track-cover-block {
     transform-style: preserve-3d;
     transition: transform 0.5s;
-  }
+}
 
 
 .volume-setting {
@@ -432,7 +450,7 @@ input[type='range']:hover {
     align-items: center;
     justify-content: space-between;
 }
-  
+
 
 @media screen and (min-width: 700px) {
     .mobile-menu {
@@ -444,39 +462,48 @@ input[type='range']:hover {
     .volume {
         display: none !important;
     }
+
     .track-list {
         display: none;
     }
+
     .background {
         background-size: 300%;
     }
+
     .track-cover {
         width: 250px;
         height: 250px;
     }
+
     .track-cover-block {
         height: 250px;
         margin-bottom: 10px;
     }
+
     input[type='range'] {
         width: 250px;
     }
+
     .buttons>button {
         scale: 0.8;
         padding-inline: 10px;
     }
+
     .track-menu {
         padding-top: 10px;
     }
+
     .track-bar {
         margin-top: 10px;
     }
-  }
+}
 
 @media screen and (max-width: 600px) {
     .track-name {
         font-size: 24px;
     }
+
     .track-author {
         font-size: 14px;
     }
@@ -487,15 +514,19 @@ input[type='range']:hover {
     .track-name-tracklist {
         font-size: 24px;
     }
+
     .track-author-tracklist {
         font-size: 16px;
     }
+
     .mobile-tracklist h1 {
         font-size: 30px;
     }
+
     .volume-setting h2 {
         font-size: 18px;
     }
+
     .mobile-settings h1 {
         font-size: 30px;
     }
