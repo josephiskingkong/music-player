@@ -1,0 +1,71 @@
+{
+    "songs":
+    [
+        {
+            "title": "Magnolia", 
+            "artist": "Playboi Carti",
+            "url": ".\\assets\\tracks\\Playboi_Carti_Magnolia.mp3",
+            "meta":
+            {
+                "text": ".\\assets\\texts\\Magnolia.txt"
+            }
+        },
+        {
+            "title": "Space Oddity",
+            "artist": "David Bowie",
+            "url": ".\\assets\\tracks\\David_Bowie_Space_Oddity.mp3",
+            "meta":
+            {
+                "text": ".\\assets\\texts\\Space Oddity.txt"
+            }
+        },
+        {
+            "title": "Only Man", 
+            "artist": "Audio Bullys",
+            "url": ".\\assets\\tracks\\Audio_Bullys_Only_Man.mp3"
+        },
+        {
+            "title": "Immigrant Song", 
+            "artist": "Led Zeppelin",
+            "url": ".\\assets\\tracks\\Led_Zeppelin_Immigrant_Song.mp3"
+        },
+        {
+            "title": "Silver Rocket", 
+            "artist": "Sonic Youth",
+            "url": ".\\assets\\tracks\\Sonic_Youth_Silver_Rocket.mp3"
+        },
+        {
+            "title": "False Alarm", 
+            "artist": "The Weeknd",
+            "url": ".\\assets\\tracks\\The_Weeknd_False_Alarm.mp3",
+            "meta":
+            {
+                "text": ".\\assets\\texts\\False Alarm.txt"
+            }
+        },
+        {
+            "title": "NO STYLIST", 
+            "artist": "Destroy Lonely",
+            "url": ".\\assets\\tracks\\Destroy Lonely - NOSTYLIST (Official Audio).mp3",
+            "meta":
+            {
+                "text": ".\\assets\\texts\\NO STYLIST.txt"
+            }
+        },
+        {
+            "title": "I Just Wanna Rock", 
+            "artist": "Lil Uzi Vert",
+            "url": ".\\assets\\tracks\\Lil Uzi Vert - Just Wanna Rock [Official Visualizer].mp3"
+        },
+        {
+            "title": "Off The Grid (Remix)", 
+            "artist": "Playboi Carti",
+            "url": ".\\assets\\tracks\\Playboi Carti - Off the Grid (Remix) (Tiktok Viral Song).mp3"
+        },
+        {
+            "title": "Cooler Than Me", 
+            "artist": "Lancey Foux",
+            "url": ".\\assets\\tracks\\Lancey Foux - Cooler Than Me (Visualiser).mp3"
+        }
+    ]
+}

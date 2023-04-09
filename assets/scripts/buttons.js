@@ -25,35 +25,37 @@ const currentSongName = document.getElementsByClassName('track-name')
 const currentBackground = document.getElementsByClassName('background')
 
 const songsPool = new ObjectPool(6, createDecoratedSong);
-const magnolia = songsPool.getObject('Magnolia', 'Playboi Carti', ".\\assets\\tracks\\Playboi_Carti_Magnolia.mp3", {text: ".\\assets\\texts\\Magnolia.txt"})
-const oddity = songsPool.getObject('Space Oddity', 'David Bowie', ".\\assets\\tracks\\David_Bowie_Space_Oddity.mp3", {text: ".\\assets\\texts\\Space Oddity.txt"})
-const man = songsPool.getObject('Only Man', 'Audio Bullys', ".\\assets\\tracks\\Audio_Bullys_Only_Man.mp3")
-const immigrant = songsPool.getObject('Immigrant Song', 'Led Zeppelin', ".\\assets\\tracks\\Led_Zeppelin_Immigrant_Song.mp3")
-const rocket = songsPool.getObject('Silver Rocket', 'Sonic Youth', ".\\assets\\tracks\\Sonic_Youth_Silver_Rocket.mp3")
-const alarm = songsPool.getObject('False Alarm', 'The Weeknd', ".\\assets\\tracks\\The_Weeknd_False_Alarm.mp3", {text: ".\\assets\\texts\\False Alarm.txt"})
-const nostylist = songsPool.getObject('NO STYLIST', 'Destroy Lonely', ".\\assets\\tracks\\Destroy Lonely - NOSTYLIST (Official Audio).mp3", {text: ".\\assets\\texts\\NO STYLIST.txt"})
-const wannarock = songsPool.getObject('I Just Wanna Rock', 'Lil Uzi Vert', ".\\assets\\tracks\\Lil Uzi Vert - Just Wanna Rock [Official Visualizer].mp3")
-const grid = songsPool.getObject('Off The Grid (Remix)', 'Playboi Carti', ".\\assets\\tracks\\Playboi Carti - Off the Grid (Remix) (Tiktok Viral Song).mp3")
-const cooler = songsPool.getObject('Cooler Than Me', 'Lancey Foux', ".\\assets\\tracks\\Lancey Foux - Cooler Than Me (Visualiser).mp3")
 
 let currentSongIndex = 0
 let songsAmount = 10
 let paused = false
 let newSongIndex = Number
+var songsArray = []
+var dataArray = []
+
+try {
+    const response = await fetch('.\\assets\\songs.json');
+    const data = await response.json();
+    dataArray = data;
+} 
+catch (error) {
+    console.error(error);
+}
+
+for (let songIndex = 0; songIndex < Object.keys(dataArray.songs).length; ++songIndex) {
+    const {title, artist, url, meta} = dataArray.songs[songIndex]
+    let songObject
+    if (meta !== undefined) {
+        songObject = songsPool.getObject(title, artist, url, meta)
+    } else {
+        songObject = songsPool.getObject(title, artist, url)
+    }
+    songsArray.push(songObject)
+}
+
+console.log(songsArray)
 
 const playlist = {
-    0: magnolia, 
-    1: oddity, 
-    2: man, 
-    3: immigrant, 
-    4: rocket, 
-    5: alarm,
-    6: nostylist,
-    7: wannarock,
-    8: grid,
-    9: cooler,
-
-    
     [Symbol.iterator]() {
         return this
     },
@@ -123,6 +125,10 @@ const playlist = {
             changeButtons()
         }
     }
+}
+
+for (let songIndex = 0; songIndex < songsArray.length; ++songIndex) {
+    playlist[songIndex] = songsArray[songIndex]
 }
 
 function getTextFromFile(filepath) {
