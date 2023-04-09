@@ -150,7 +150,8 @@ function metaConfigure(oldIndex, newIndex) {
     currentArtist[0].textContent = trackListArtists[newIndex].textContent
     currentSongName[0].textContent = trackListSongNames[newIndex].textContent
     currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[newIndex].src + ')'
-    
+    playlist[currentSongIndex].audio.volume = volumeBar.value
+
     if (playlist[currentSongIndex].text !== undefined) {
         trackText.innerHTML =  getTextFromFile(playlist[currentSongIndex].text)
     } else {
@@ -266,10 +267,12 @@ trackBar.addEventListener('input', () => {
 
 volumeBar.addEventListener('input', () => {
     playlist[currentSongIndex].audio.volume = volumeBar.value
+    mobileVolumeBar.value = volumeBar.value
 })
 
 mobileVolumeBar.addEventListener('input', () => {
     playlist[currentSongIndex].audio.volume = mobileVolumeBar.value
+    volumeBar.value = mobileVolumeBar.value
 })
 
 replayButton.onclick = function () {
