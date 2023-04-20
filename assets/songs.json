@@ -7,7 +7,7 @@
             "url": ".\\assets\\tracks\\Playboi_Carti_Magnolia.mp3",
             "meta":
             {
-                "cover": "\\music-player\\assets\\image\\carti-cover.jpeg",
+                "cover": "\\music-player\\assets\\images\\carti-cover.jpg",
                 "text": ".\\assets\\texts\\Magnolia.txt"
             }
         },
@@ -17,7 +17,7 @@
             "url": ".\\assets\\tracks\\David_Bowie_Space_Oddity.mp3",
             "meta":
             {
-                "cover": "\\music-player\\assets\\image\\carti-cover.jpeg",
+                "cover": "\\music-player\\assets\\images\\space_oddity_bowie.jpg",
                 "text": ".\\assets\\texts\\Space Oddity.txt"
             }
         },
@@ -27,7 +27,7 @@
             "url": ".\\assets\\tracks\\Audio_Bullys_Only_Man.mp3",
             "meta":
             {
-                "cover": "\\music-player\\assets\\image\\carti-cover.jpeg"
+                "cover": "\\music-player\\assets\\images\\only_man_cover.jpg"
             }
         },
         {
@@ -36,7 +36,7 @@
             "url": ".\\assets\\tracks\\Led_Zeppelin_Immigrant_Song.mp3",
             "meta":
             {
-                "cover": "\\music-player\\assets\\image\\carti-cover.jpeg"
+                "cover": "\\music-player\\assets\\images\\led_zeppelin_immigrant.jpg"
             }
         },
         {
@@ -45,7 +45,7 @@
             "url": ".\\assets\\tracks\\Sonic_Youth_Silver_Rocket.mp3",
             "meta":
             {
-                "cover": "\\music-player\\assets\\image\\carti-cover.jpeg"
+                "cover": "\\music-player\\assets\\images\\sonic_youth_rocket.jpg"
             }
         },
         {
@@ -54,7 +54,7 @@
             "url": ".\\assets\\tracks\\The_Weeknd_False_Alarm.mp3",
             "meta":
             {
-                "cover": "\\music-player\\assets\\image\\carti-cover.jpeg",
+                "cover": "\\music-player\\assets\\images\\the_weeknd_alarm.jpg",
                 "text": ".\\assets\\texts\\False Alarm.txt"
             }
         },
@@ -64,8 +64,9 @@
             "url": ".\\assets\\tracks\\Destroy Lonely - NOSTYLIST (Official Audio).mp3",
             "meta":
             {
-                "cover": "\\music-player\\assets\\image\\carti-cover.jpeg",
-                "text": ".\\assets\\texts\\NO STYLIST.txt"
+                "cover": "\\music-player\\assets\\images\\destroy_lonely_nostylist.jpg",
+                "text": ".\\assets\\texts\\NO STYLIST.txt",
+                "video": ".\\assets\\videos\\Destroy Lonely - NOSTYLIST (Official Video).mp4"
             }
         },
         {
@@ -74,13 +75,17 @@
             "url": ".\\assets\\tracks\\Lil Uzi Vert - Just Wanna Rock [Official Visualizer].mp3",
             "meta":
             {
-                "cover": "\\music-player\\assets\\image\\carti-cover.jpeg"
+                "cover": "\\music-player\\assets\\images\\lil_uzi_vert_i_just_wanna_rock.jpg"
             }
         },
         {
             "title": "Off The Grid (Remix)", 
             "artist": "Playboi Carti",
-            "url": ".\\assets\\tracks\\Playboi Carti - Off the Grid (Remix) (Tiktok Viral Song).mp3"
+            "url": ".\\assets\\tracks\\Playboi Carti - Off the Grid (Remix) (Tiktok Viral Song).mp3",
+            "meta": 
+            {
+                "cover" : "\\music-player\\assets\\images\\carti_off_the_grid_remix.jpg"
+            }
         },
         {
             "title": "Cooler Than Me", 
@@ -88,7 +93,7 @@
             "url": ".\\assets\\tracks\\Lancey Foux - Cooler Than Me (Visualiser).mp3",
             "meta":
             {
-                "cover": "\\music-player\\assets\\image\\carti-cover.jpeg"
+                "cover": "\\music-player\\assets\\images\\lancey_cooler_than_me.jpg"
             }
         }
     ]

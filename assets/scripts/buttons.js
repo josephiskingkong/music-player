@@ -23,6 +23,10 @@ const currentCover = document.getElementsByClassName('track-cover')
 const currentArtist = document.getElementsByClassName('track-author')
 const currentSongName = document.getElementsByClassName('track-name')
 const currentBackground = document.getElementsByClassName('background')
+const tracklist = document.getElementById('tracklist')
+const mobileTracklist = document.getElementById('mobile-tracklist')
+const videoElement = document.getElementById("video");
+
 
 const songsPool = new ObjectPool(6, createDecoratedSong);
 
@@ -72,6 +76,9 @@ const playlist = {
             paused = false
         }
 
+        playlist[currentSongIndex].pause();
+        playlist[currentSongIndex].audio.currentTime = 0;
+
         if (shuffleButton.classList.contains('static')) {
             newSongIndex = -1
             while (newSongIndex === currentSongIndex || newSongIndex === -1) {
@@ -108,6 +115,8 @@ const playlist = {
         } else {
             paused = false
         }
+        playlist[currentSongIndex].pause();
+        playlist[currentSongIndex].audio.currentTime = 0;
 
         if (shuffleButton.classList.contains('static')) {
             newSongIndex = -1
@@ -143,6 +152,23 @@ function getTextFromFile(filepath) {
     }
 }
 
+let tracklistSongs = ''
+
+for (let songIndex = 0; songIndex < Object.keys(dataArray.songs).length; ++songIndex) {
+    tracklistSongs += `<div class="tracklist-track">
+    <img src="${playlist[songIndex]['cover']}" alt="${playlist[songIndex]['title']} cover"
+        style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;"
+        class=tracklist-cover>
+    <div class="track-name-author-tracklist">
+        <h1 class="track-name-tracklist">${playlist[songIndex].title}</h1>
+        <h2 class="track-author-tracklist">${playlist[songIndex].artist}</h2>
+    </div>
+</div>`
+}
+
+tracklist.innerHTML = tracklistSongs
+mobileTracklist.innerHTML = tracklistSongs
+
 function metaConfigure(oldIndex, newIndex) {
     playlist[currentSongIndex].pause()
     playlist[currentSongIndex].audio.currentTime = 0
@@ -155,7 +181,25 @@ function metaConfigure(oldIndex, newIndex) {
     currentCover[0].src = trackListCovers[newIndex].src
     currentArtist[0].textContent = trackListArtists[newIndex].textContent
     currentSongName[0].textContent = trackListSongNames[newIndex].textContent
-    currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[newIndex].src + ')'
+    if (playlist[currentSongIndex].video == undefined) {
+        currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[newIndex].src + ')'
+        videoElement.classList.add('hidden');
+    } else {
+        videoElement.classList.remove('hidden');
+        if (playlist[currentSongIndex].video == undefined) {
+            const coverImageUrl = trackListCovers[newIndex].src;
+resizeImage(coverImageUrl, 1000, 1000, function (resizedImageUrl) {
+  currentCover[0].src = resizedImageUrl;
+  currentBackground[0].style.backgroundImage = 'url(' + resizedImageUrl + ')';
+});
+
+        } else {
+            videoElement.src = playlist[currentSongIndex].video;
+            videoElement.pause();
+        }
+    }
+    updateMediaSessionMetadata();
+
     playlist[currentSongIndex].audio.volume = volumeBar.value
 
     if (playlist[currentSongIndex].text !== undefined) {
@@ -172,6 +216,9 @@ function metaConfigure(oldIndex, newIndex) {
 
     if (playButton.classList.contains('hidden') && !playlist[newIndex].paused) {
         changeButtons()   
+        if (playlist[currentSongIndex].video != undefined) {
+            videoElement.play()
+        }
     }
 }
 
@@ -228,11 +275,17 @@ function changeButtons() {
 
 playButton.onclick = function() {
     playlist[currentSongIndex].play()
+    if (playlist[currentSongIndex].video != undefined) {
+        videoElement.play()
+    }
     changeButtons()
 }
 
 pauseButton.onclick = function() {
     playlist[currentSongIndex].pause()
+    if (playlist[currentSongIndex].video != undefined) {
+        videoElement.pause()
+    }
     changeButtons()
 }
 
@@ -240,8 +293,14 @@ window.addEventListener('keypress', function (event) {
     if (event.key === ' ') {
         if (!playlist[currentSongIndex].isPlaying) {
             playlist[currentSongIndex].play()
+            if (playlist[currentSongIndex].video != undefined) {
+                videoElement.play()
+            }
         } else {
             playlist[currentSongIndex].pause()
+            if (playlist[currentSongIndex].video != undefined) {
+                videoElement.pause()
+            }
         }
         changeButtons()
     } else if (event.key === 'k') {
@@ -301,6 +360,9 @@ for (let elementIndex = 0; elementIndex < trackListElements.length; ++elementInd
     playlist[currentSongIndex].audio.currentTime = 0
     metaConfigure(currentSongIndex, elementIndex)
     playlist[currentSongIndex].play()
+    if (playlist[currentSongIndex].video != undefined) {
+        videoElement.play()
+    }
     changeButtons()})
 }
 
@@ -311,3 +373,48 @@ document.addEventListener('click', function(event) {
 mobileMenuHeader.onclick = function() {
     mobileMenu.classList.toggle('active-mobile-menu')
 }
+
+if ('mediaSession' in navigator) {
+    navigator.mediaSession.setActionHandler('play', () => {
+      playlist[currentSongIndex].play();
+      if (playlist[currentSongIndex].video !== undefined) {
+        videoElement.play();
+      }
+      changeButtons();
+    });
+  
+    navigator.mediaSession.setActionHandler('pause', () => {
+      playlist[currentSongIndex].pause();
+      if (playlist[currentSongIndex].video !== undefined) {
+        videoElement.pause();
+      }
+      changeButtons();
+    });
+  
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+      playlist.previous();
+    });
+  
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+      playlist.next();
+    });
+  }
+  
+  function updateMediaSessionMetadata() {
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: playlist[currentSongIndex].title,
+        artist: playlist[currentSongIndex].artist,
+        album: '',
+        artwork: [
+          { src: playlist[currentSongIndex].cover, sizes: '96x96', type: 'image/png' },
+          { src: playlist[currentSongIndex].cover, sizes: '128x128', type: 'image/png' },
+          { src: playlist[currentSongIndex].cover, sizes: '192x192', type: 'image/png' },
+          { src: playlist[currentSongIndex].cover, sizes: '256x256', type: 'image/png' },
+          { src: playlist[currentSongIndex].cover, sizes: '384x384', type: 'image/png' },
+          { src: playlist[currentSongIndex].cover, sizes: '512x512', type: 'image/png' },
+        ]
+      });
+    }
+  }
+  

@@ -27,6 +27,7 @@ export class Song {
 }
 
 export function createSong(title, artist, url) {
+  audio.preload = 'metadata';
     return new Song (title, artist, url);
 }
 

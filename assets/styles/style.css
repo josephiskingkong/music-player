@@ -9,7 +9,7 @@
     content: '';
 
     position: absolute;
-    background-image: url(/music-player/assets/images/carti-cover.jpeg);
+    background-image: url();
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 150%;
@@ -22,6 +22,7 @@
 
 body {
     background-color: black;
+    height: 100vh;
 }
 
 section {
@@ -47,6 +48,7 @@ section {
     border-radius: 10px;
     position: relative;
     overflow: hidden;
+    margin-bottom: 5px;
 }
 
 .track-cover {
@@ -85,6 +87,7 @@ section {
     padding-top: 10px;
     padding-inline: 10px;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .track-cover-block:hover .track-back {
@@ -141,6 +144,7 @@ section {
 }
 
 .track-name-author {
+    margin-top: 10px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -343,6 +347,10 @@ input[type='range']:hover {
     overflow: scroll;
 }
 
+.tracklist-cover {
+    object-fit: cover;
+}
+
 .tracklist-menu::-webkit-scrollbar {
     display: none;
 }
@@ -398,7 +406,7 @@ input[type='range']:hover {
     align-items: center;
     justify-content: center;
     width: 100vw;
-    margin-bottom: 20px;
+margin-top: 8px;
 }
 
 .active-mobile-menu {
@@ -416,8 +424,7 @@ input[type='range']:hover {
 
 .mobile-settings {
     padding-inline: 20px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
 }
 
 #mobile-volume-bar {
@@ -431,6 +438,7 @@ input[type='range']:hover {
 .mobile-tracklist {
     padding-inline: 20px;
     overflow: scroll;
+    margin-bottom: 100px;
 }
 
 .mobile-tracklist::-webkit-scrollbar {
@@ -449,6 +457,7 @@ input[type='range']:hover {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 
@@ -531,3 +540,34 @@ input[type='range']:hover {
         font-size: 30px;
     }
 }
+
+#video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@media screen and (min-width: 2000px) {
+    #video {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -1;
+        overflow: hidden;
+    }
+}
+
+
