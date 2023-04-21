@@ -11,6 +11,15 @@
 
 <body>
     <section>
+        <div class="loader-container" id="preloader">
+            <div id="loader">
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+            </div>
+        </div>
         <div class="background">
         </div>
         <video id="video" autoplay muted loop playsinline disablePictureInPicture></video>
@@ -115,20 +124,43 @@
             bg.style.transform = 'translate(-' + x * 50 + 'px, -' + y * 50 + 'px)';
         });
     </script>
-        <script>
-            function handleVisibilityChange() {
-                var videoElement = document.getElementById("video");
-                if (document.hidden) {
-                    videoElement.pause();
-                } else if (playlist[currentSong].paused != true) {
-                    videoElement.play();
-                }
+    <script>
+        function handleVisibilityChange() {
+            var videoElement = document.getElementById("video");
+            if (document.hidden) {
+                videoElement.pause();
+            } else if (playlist[currentSong].paused != true) {
+                videoElement.play();
             }
-    
-            document.addEventListener("DOMContentLoaded", function() {
-                document.addEventListener("visibilitychange", handleVisibilityChange);
-            });
-        </script>
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("visibilitychange", handleVisibilityChange);
+        });
+    </script>
+
+
+    <script>
+        const preloader = document.getElementById('preloader');
+        const loader = document.getElementById('loader')
+        window.addEventListener("load", function () {
+            
+            let opacity = 1;
+            let initSize = 150;
+            let intervalId = setInterval(function () {
+                opacity -= 0.01;
+                initSize += 5;
+                preloader.style.opacity = opacity;
+                loader.style.width = initSize;
+                loader.style.height = initSize;
+
+                if (opacity <= 0) {
+                    clearInterval(intervalId);
+                    preloader.style.display = "none";
+                }
+            }, 10);
+        });
+    </script>
 </body>
 
 </html>
