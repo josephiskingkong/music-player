@@ -417,4 +417,17 @@ if ('mediaSession' in navigator) {
       });
     }
   }
+
+  function handleVisibilityChange() {
+    var videoElement = document.getElementById("video");
+    if (document.hidden) {
+        videoElement.pause();
+    } else if (playlist[currentSong].paused != true) {
+        videoElement.play();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+});
   

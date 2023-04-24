@@ -169,6 +169,7 @@ section {
     filter: invert();
     opacity: 0.8;
     transition: 0.1s ease-in;
+    cursor: pointer;
 }
 
 .buttons>button>img:hover {
@@ -186,6 +187,7 @@ section {
 
 #replay-button {
     transition: all .2s;
+    cursor: pointer;
 }
 
 .buttons>button {
@@ -240,6 +242,7 @@ input[type='range'] {
     left: -2px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.333);
     transition: all .1s ease-in;
+    cursor: pointer;
 }
 
 input[type='range']::-webkit-slider-thumb {
@@ -275,6 +278,7 @@ input[type='range']:hover {
     align-items: center;
     padding-right: 80px;
     padding-bottom: 3px;
+    cursor: pointer;
 }
 
 .volume:hover {
@@ -328,6 +332,7 @@ input[type='range']:hover {
 
 .tracklist-button>img {
     filter: invert();
+    cursor: pointer;
 }
 
 .tracklist-button:hover {
@@ -363,6 +368,7 @@ input[type='range']:hover {
     padding: 10px;
     border-radius: 10px;
     transition: all .1s ease-in;
+    cursor: pointer;
 }
 
 .hidden {
@@ -470,6 +476,9 @@ margin-top: 8px;
 }
 
 @media screen and (max-width: 700px) {
+    .logo {
+        padding-left: 30px !important;
+    }
     .volume {
         display: none !important;
     }
@@ -657,6 +666,23 @@ margin-top: 8px;
     align-items: center;
 }
 
+.logo {
+    width: 140px;
+    opacity: 0.75;
+    padding-left: 80px;
+    padding-top: 30px;
+    position: fixed;
+    cursor: pointer;
+    z-index: 9999;
+    transition: .2s;
+}
 
+.logo>img {
+    width: 100%;
+    object-fit: cover;
+}
 
-      
+.logo:hover {
+    opacity: 1;
+    transition: .15s;
+}
