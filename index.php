@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lugolygin Player</title>
     <link rel="stylesheet" href="/music-player/assets/styles/style.css">
+    <script type="module" src="assets/scripts/buttons.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
 </head>
 
 <body>
@@ -114,8 +116,6 @@
             </div>
     </section>
     <footer></footer>
-    <script type="module" src="assets/scripts/buttons.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
     <script type="text/javascript">
         let bg = document.querySelector('.background');
         window.addEventListener('mousemove', function (e) {
@@ -125,11 +125,12 @@
         });
     </script>
     <script>
+        const pausedButton = document.getElementById('pause-button')
         function handleVisibilityChange() {
             var videoElement = document.getElementById("video");
             if (document.hidden) {
                 videoElement.pause();
-            } else if (playlist[currentSong].paused != true) {
+            } else if (!pausedButton.classList.contains('hidden')) {
                 videoElement.play();
             }
         }
