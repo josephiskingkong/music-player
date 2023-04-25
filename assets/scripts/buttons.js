@@ -27,7 +27,6 @@ const tracklist = document.getElementById('tracklist')
 const mobileTracklist = document.getElementById('mobile-tracklist')
 const videoElement = document.getElementById("video");
 
-
 const songsPool = new ObjectPool(6, createDecoratedSong);
 
 let currentSongIndex = 0
@@ -409,18 +408,4 @@ if ('mediaSession' in navigator) {
         ]
       });
     }
-  }
-
-  function handleVisibilityChange() {
-    var videoElement = document.getElementById("video");
-    if (document.hidden) {
-        videoElement.pause();
-    } else if (playlist[currentSong].paused != true) {
-        videoElement.play();
-    }
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-});
-  
+  } 

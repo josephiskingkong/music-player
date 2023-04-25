@@ -131,10 +131,20 @@
         });
     </script>
     <script>
+        const pauseButton = document.getElementById('pause-button')
+        function handleVisibilityChange() {
+            var videoElement = document.getElementById("video");
+            if (document.hidden) {
+                videoElement.pause();
+            } else if (!pauseButton.classList.contains('hidden')) {
+                videoElement.play();
+            }
+        }
 
+        document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("visibilitychange", handleVisibilityChange);
+        });
     </script>
-
-
     <script>
         const preloader = document.getElementById('preloader');
         const loader = document.getElementById('loader')
