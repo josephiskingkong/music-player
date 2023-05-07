@@ -24,7 +24,7 @@
         </div>
         <div class="background">
         </div>
-        <video id="video" autoplay muted loop playsinline disablePictureInPicture></video>
+        <video id="video" muted loop playsinline disablePictureInPicture></video>
         <nav>
             <div class="logo">
                 <img src="./assets/images/logo.png" alt="">

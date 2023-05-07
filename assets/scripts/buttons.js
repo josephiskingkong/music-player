@@ -31,10 +31,29 @@ const songsPool = new ObjectPool(6, createDecoratedSong);
 
 let currentSongIndex = 0
 let songsAmount = 10
-let paused = false
+let paused = true
 let newSongIndex = Number
 var songsArray = []
 var dataArray = []
+
+function getTextFromFile(filepath) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', filepath, false);
+    xhr.send();
+  
+    if (xhr.status === 200) {
+      return xhr.responseText;
+    } else {
+      throw new Error('Error loading file');
+    }
+}
+
+function preloadVideo(src) {
+    videoElement.src = src;
+    videoElement.load();
+    
+}
+
 
 try {
     const response = await fetch('.\\assets\\songs.json');
@@ -73,9 +92,6 @@ const playlist = {
             paused = false
         }
 
-        playlist[currentSongIndex].pause();
-        playlist[currentSongIndex].audio.currentTime = 0;
-
         if (shuffleButton.classList.contains('static')) {
             newSongIndex = -1
             while (newSongIndex === currentSongIndex || newSongIndex === -1) {
@@ -84,7 +100,7 @@ const playlist = {
             metaConfigure(currentSongIndex, newSongIndex)
             if (!paused) {
                 playlist[currentSongIndex].play()
-                changeButtons()
+                // changeButtons()
             }
             return { done, value: playlist[currentSongIndex] }
         } else if (done) {
@@ -92,7 +108,7 @@ const playlist = {
             metaConfigure(currentSongIndex, newSongIndex)
             if (!paused) {
                 playlist[currentSongIndex].play()
-                changeButtons()
+                // changeButtons()
             } 
             return { done: true }
         } else {
@@ -100,7 +116,7 @@ const playlist = {
             metaConfigure(currentSongIndex, newSongIndex)
             if (!paused) {
                 playlist[currentSongIndex].play()
-                changeButtons()
+                // changeButtons()
             }
             return { done, value: playlist[currentSongIndex] } 
         }
@@ -128,30 +144,18 @@ const playlist = {
         metaConfigure(currentSongIndex, newSongIndex)
         if (!paused) {
             playlist[currentSongIndex].play()
-            changeButtons()
+            // changeButtons()
         }
     }
 }
 
-for (let songIndex = 0; songIndex < songsArray.length; ++songIndex) {
+for (let songIndex = 0; songIndex < songsArray.length; ++songIndex) { // 
     playlist[songIndex] = songsArray[songIndex]
-}
-
-function getTextFromFile(filepath) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', filepath, false);
-    xhr.send();
-  
-    if (xhr.status === 200) {
-      return xhr.responseText;
-    } else {
-      throw new Error('Error loading file');
-    }
 }
 
 let tracklistSongs = ''
 
-for (let songIndex = 0; songIndex < Object.keys(dataArray.songs).length; ++songIndex) {
+for (let songIndex = 0; songIndex < Object.keys(dataArray.songs).length; ++songIndex) { // добавление песен в альбом песен
     tracklistSongs += `<div class="tracklist-track">
     <img src="${playlist[songIndex]['cover']}" alt="${playlist[songIndex]['title']} cover"
         style="width: 50px; height: 50px; border-radius: 10px; margin-right: 10px;"
@@ -161,13 +165,37 @@ for (let songIndex = 0; songIndex < Object.keys(dataArray.songs).length; ++songI
         <h2 class="track-author-tracklist">${playlist[songIndex].artist}</h2>
     </div>
 </div>`
+
+
+    playlist[songIndex].audio.addEventListener('timeupdate', () => {
+        const currentTime = playlist[currentSongIndex].audio.currentTime
+        const duration = playlist[currentSongIndex].audio.duration
+        const progress = (currentTime / duration) * 100
+        trackBar.value = progress
+    })
+    playlist[songIndex].audio.addEventListener('volumechange', () => {
+        volumeBar.value = playlist[currentSongIndex].audio.volume 
+    })
+    playlist[songIndex].audio.addEventListener('volumechange', () => {
+        mobileVolumeBar.value = playlist[currentSongIndex].audio.volume 
+    })
+    playlist[songIndex].audio.addEventListener("ended", () => {
+        if (!replayButton.classList.contains('static-replay')) {
+            playlist.next()
+        }
+        playlist[currentSongIndex].play()
+    })
 }
 
 tracklist.innerHTML = tracklistSongs
 mobileTracklist.innerHTML = tracklistSongs
 
+// const controller = new AbortController()
+
 function metaConfigure(oldIndex, newIndex) {
     playlist[currentSongIndex].pause()
+    // playlist[currentSongIndex].audio.abort()
+    
     playlist[currentSongIndex].audio.currentTime = 0
 
     if (replayButton.classList.contains('static-replay')) {
@@ -178,23 +206,32 @@ function metaConfigure(oldIndex, newIndex) {
     currentCover[0].src = trackListCovers[newIndex].src
     currentArtist[0].textContent = trackListArtists[newIndex].textContent
     currentSongName[0].textContent = trackListSongNames[newIndex].textContent
-    if (playlist[currentSongIndex].video == undefined) {
-        currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[newIndex].src + ')'
-        videoElement.classList.add('hidden');
-    } else {
-        videoElement.classList.remove('hidden');
-        if (playlist[currentSongIndex].video == undefined) {
-            const coverImageUrl = trackListCovers[newIndex].src
-            resizeImage(coverImageUrl, 1000, 1000, function (resizedImageUrl) {
-            currentCover[0].src = resizedImageUrl;
-            currentBackground[0].style.backgroundImage = 'url(' + resizedImageUrl + ')';
-            });
+    // if (playlist[currentSongIndex].video == undefined) {
+    //     currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[newIndex].src + ')'
+    //     videoElement.classList.add('hidden');
+    // } else {
+    //     videoElement.classList.remove('hidden');
+    //     if (playlist[currentSongIndex].video == undefined) {
+    //         const coverImageUrl = trackListCovers[newIndex].src
+    //         resizeImage(coverImageUrl, 1000, 1000, function (resizedImageUrl) {
+    //         currentCover[0].src = resizedImageUrl;
+    //         currentBackground[0].style.backgroundImage = 'url(' + resizedImageUrl + ')';
+    //         });
 
-        } else {
-            videoElement.src = playlist[currentSongIndex].video;
-            videoElement.pause();
-        }
+    //     } else {
+    //         videoElement.src = playlist[currentSongIndex].video;
+    //         videoElement.pause();
+    //     }
+    // }
+ 
+    currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[newIndex].src + ')'
+    videoElement.classList.add('hidden');
+    if (playlist[currentSongIndex].video !== undefined) {
+        videoElement.classList.remove('hidden');
+        videoElement.src = playlist[currentSongIndex].video;
+        videoElement.pause();
     }
+
     updateMediaSessionMetadata();
 
     playlist[currentSongIndex].audio.volume = volumeBar.value
@@ -205,47 +242,61 @@ function metaConfigure(oldIndex, newIndex) {
         trackText.innerHTML = playlist[currentSongIndex].title + "<br>" + playlist[currentSongIndex].artist
     }
 
-    if (playButton.classList.contains('hidden') && !playlist[newIndex].paused) {
-        changeButtons()   
+    if (!paused) {
         if (playlist[currentSongIndex].video != undefined) {
             videoElement.play()
+            .then(() => {
+                console.log("video good " + playlist[currentSongIndex].title)
+            })
+            .catch(error => {
+                console.log(error)
+            })
         }
     }
 }
 
+metaConfigure(0, 0)
 
-playlist[0].audio.addEventListener('timeupdate', () => {
-    const currentTime = playlist[currentSongIndex].audio.currentTime
-    const duration = playlist[currentSongIndex].audio.duration
-    const progress = (currentTime / duration) * 100
-    trackBar.value = progress
-})
-playlist[0].audio.addEventListener("ended", () => {
-    if (!replayButton.classList.contains('static-replay')) {
-        playlist.next()
-    }
-    playlist[currentSongIndex].play()
-})
-for (let element of playlist) {
-    element.audio.addEventListener('timeupdate', () => {
-        const currentTime = playlist[currentSongIndex].audio.currentTime
-        const duration = playlist[currentSongIndex].audio.duration
-        const progress = (currentTime / duration) * 100
-        trackBar.value = progress
-    })
-    element.audio.addEventListener('volumechange', () => {
-        volumeBar.value = playlist[currentSongIndex].audio.volume 
-    })
-    element.audio.addEventListener('volumechange', () => {
-        mobileVolumeBar.value = playlist[currentSongIndex].audio.volume 
-    })
-    element.audio.addEventListener("ended", () => {
-        if (!replayButton.classList.contains('static-replay')) {
-            playlist.next()
-        }
-        playlist[currentSongIndex].play()
-    })
-}
+// playlist[0].audio.addEventListener('timeupdate', () => {
+//     const currentTime = playlist[currentSongIndex].audio.currentTime
+//     const duration = playlist[currentSongIndex].audio.duration
+//     const progress = (currentTime / duration) * 100
+//     trackBar.value = progress
+// })
+// playlist[0].audio.addEventListener("ended", () => {
+//     if (!replayButton.classList.contains('static-replay')) {
+//         playlist.next()
+//     }
+//     playlist[currentSongIndex].play()
+// })
+// // playlist[0].audio.load()
+// // if (playlist[0].video !== undefined) {
+// //     playlist[0].video.load()
+// // }
+// for (let element of playlist) {
+//     // element.audio.load()
+//     // if (element.video !== undefined) {
+//     //     element.video.load()
+//     // }
+//     element.audio.addEventListener('timeupdate', () => {
+//         const currentTime = playlist[currentSongIndex].audio.currentTime
+//         const duration = playlist[currentSongIndex].audio.duration
+//         const progress = (currentTime / duration) * 100
+//         trackBar.value = progress
+//     })
+//     element.audio.addEventListener('volumechange', () => {
+//         volumeBar.value = playlist[currentSongIndex].audio.volume 
+//     })
+//     element.audio.addEventListener('volumechange', () => {
+//         mobileVolumeBar.value = playlist[currentSongIndex].audio.volume 
+//     })
+//     element.audio.addEventListener("ended", () => {
+//         if (!replayButton.classList.contains('static-replay')) {
+//             playlist.next()
+//         }
+//         playlist[currentSongIndex].play()
+//     })
+// }
 
 forwardButton.addEventListener('click', function() {
     playlist.next()
@@ -280,7 +331,7 @@ pauseButton.onclick = function() {
     changeButtons()
 }
 
-window.addEventListener('keypress', function (event) {
+window.addEventListener('keypress', function (event) { // управление плейлистом кнопками
     if (event.key === ' ') {
         if (!playlist[currentSongIndex].isPlaying) {
             playlist[currentSongIndex].play()
@@ -310,7 +361,7 @@ window.addEventListener('keypress', function (event) {
     }
 })
 
-document.querySelectorAll("button").forEach( function(item) {
+document.querySelectorAll("button").forEach( function(item) { //снятие выделения с кнопок
     item.addEventListener('focus', function() {
         this.blur();
     })
@@ -353,8 +404,17 @@ for (let elementIndex = 0; elementIndex < trackListElements.length; ++elementInd
         playlist[currentSongIndex].play()
         if (playlist[currentSongIndex].video != undefined) {
             videoElement.play()
+            .then(() => {
+                console.log("video good " + playlist[currentSongIndex].title)
+            })
+            .catch(error => {
+                console.log(error)
+            })
         }
-        changeButtons()
+
+        if (!playButton.classList.contains('hidden')) {
+            changeButtons()
+        }
     })
 }
 
