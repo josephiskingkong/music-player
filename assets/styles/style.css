@@ -673,7 +673,7 @@ margin-top: 8px;
     padding-top: 30px;
     position: fixed;
     cursor: pointer;
-    z-index: 9999;
+    z-index: 9;
     transition: .2s;
 }
 

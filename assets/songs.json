@@ -97,6 +97,16 @@
             {
                 "cover": "\\music-player\\assets\\images\\lancey_cooler_than_me.jpg"
             }
+        },
+        {
+            "title": "hooligan",
+            "artist": "Baby Keem",
+            "url": ".\\assets\\tracks\\Baby Keem - hooligan.mp3",
+            "meta":
+            {
+                "cover": "\\music-player\\assets\\images\\baby_keem_hooligan.png",
+                "video": ".\\assets\\videos\\Baby Keem - hooligan (Official Video).mp4"
+            }
         }
     ]
 }
