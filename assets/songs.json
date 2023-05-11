@@ -36,7 +36,8 @@
             "url": ".\\assets\\tracks\\Led_Zeppelin_Immigrant_Song.mp3",
             "meta":
             {
-                "cover": "\\music-player\\assets\\images\\led_zeppelin_immigrant.jpg"
+                "cover": "\\music-player\\assets\\images\\led_zeppelin_immigrant.jpg",
+                "video": ".\\assets\\videos\\immigrant_song.mp4"
             }
         },
         {
@@ -55,7 +56,8 @@
             "meta":
             {
                 "cover": "\\music-player\\assets\\images\\the_weeknd_alarm.jpg",
-                "text": ".\\assets\\texts\\False Alarm.txt"
+                "text": ".\\assets\\texts\\False Alarm.txt",
+                "video": ".\\assets\\videos\\the_weeknd_false_alarm.mp4"
             }
         },
         {

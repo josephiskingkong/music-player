@@ -9,9 +9,15 @@ export class Song {
       this.audio.loop = false
     }
   
-    play() {
+    async play() {
       if (!this.isPlaying) {
-        this.audio.play();
+        this.audio.play()
+          .then(() => {
+            console.log("good " + this.title)
+          })
+          .catch(error => {
+            console.log("bad " + this.title)
+          })
         this.isPlaying = true;
         this.isPaused = false;
       }
