@@ -12,11 +12,9 @@ export class Song {
     async play() {
       if (!this.isPlaying) {
         this.audio.play()
-          .then(() => {
-            console.log("good " + this.title)
-          })
+          .then(() => {})
           .catch(error => {
-            console.log("bad " + this.title)
+            console.log(error)
           })
         this.isPlaying = true;
         this.isPaused = false;
