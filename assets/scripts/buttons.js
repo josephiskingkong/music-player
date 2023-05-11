@@ -30,7 +30,6 @@ const videoElement = document.getElementById("video");
 const songsPool = new ObjectPool(6, createDecoratedSong);
 
 let currentSongIndex = 0
-let songsAmount = 10
 let paused = true
 let newSongIndex = Number
 var songsArray = []
@@ -64,7 +63,9 @@ catch (error) {
     console.error(error);
 }
 
-for (let songIndex = 0; songIndex < Object.keys(dataArray.songs).length; ++songIndex) {
+let songsAmount = Object.keys(dataArray.songs).length
+
+for (let songIndex = 0; songIndex < songsAmount; ++songIndex) {
     const {title, artist, url, meta} = dataArray.songs[songIndex]
     let songObject
     if (meta !== undefined) {
@@ -100,7 +101,6 @@ const playlist = {
             metaConfigure(currentSongIndex, newSongIndex)
             if (!paused) {
                 playlist[currentSongIndex].play()
-                // changeButtons()
             }
             return { done, value: playlist[currentSongIndex] }
         } else if (done) {
@@ -108,7 +108,6 @@ const playlist = {
             metaConfigure(currentSongIndex, newSongIndex)
             if (!paused) {
                 playlist[currentSongIndex].play()
-                // changeButtons()
             } 
             return { done: true }
         } else {
@@ -116,7 +115,6 @@ const playlist = {
             metaConfigure(currentSongIndex, newSongIndex)
             if (!paused) {
                 playlist[currentSongIndex].play()
-                // changeButtons()
             }
             return { done, value: playlist[currentSongIndex] } 
         }
@@ -144,7 +142,6 @@ const playlist = {
         metaConfigure(currentSongIndex, newSongIndex)
         if (!paused) {
             playlist[currentSongIndex].play()
-            // changeButtons()
         }
     }
 }
@@ -190,11 +187,8 @@ for (let songIndex = 0; songIndex < Object.keys(dataArray.songs).length; ++songI
 tracklist.innerHTML = tracklistSongs
 mobileTracklist.innerHTML = tracklistSongs
 
-// const controller = new AbortController()
-
 function metaConfigure(oldIndex, newIndex) {
     playlist[currentSongIndex].pause()
-    // playlist[currentSongIndex].audio.abort()
     
     playlist[currentSongIndex].audio.currentTime = 0
 
@@ -206,24 +200,7 @@ function metaConfigure(oldIndex, newIndex) {
     currentCover[0].src = trackListCovers[newIndex].src
     currentArtist[0].textContent = trackListArtists[newIndex].textContent
     currentSongName[0].textContent = trackListSongNames[newIndex].textContent
-    // if (playlist[currentSongIndex].video == undefined) {
-    //     currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[newIndex].src + ')'
-    //     videoElement.classList.add('hidden');
-    // } else {
-    //     videoElement.classList.remove('hidden');
-    //     if (playlist[currentSongIndex].video == undefined) {
-    //         const coverImageUrl = trackListCovers[newIndex].src
-    //         resizeImage(coverImageUrl, 1000, 1000, function (resizedImageUrl) {
-    //         currentCover[0].src = resizedImageUrl;
-    //         currentBackground[0].style.backgroundImage = 'url(' + resizedImageUrl + ')';
-    //         });
 
-    //     } else {
-    //         videoElement.src = playlist[currentSongIndex].video;
-    //         videoElement.pause();
-    //     }
-    // }
- 
     currentBackground[0].style.backgroundImage = 'url(' + trackListCovers[newIndex].src + ')'
     videoElement.classList.add('hidden');
     if (playlist[currentSongIndex].video !== undefined) {
@@ -245,9 +222,7 @@ function metaConfigure(oldIndex, newIndex) {
     if (!paused) {
         if (playlist[currentSongIndex].video != undefined) {
             videoElement.play()
-            .then(() => {
-                console.log("video good " + playlist[currentSongIndex].title)
-            })
+            .then(() => {})
             .catch(error => {
                 console.log(error)
             })
@@ -256,47 +231,6 @@ function metaConfigure(oldIndex, newIndex) {
 }
 
 metaConfigure(0, 0)
-
-// playlist[0].audio.addEventListener('timeupdate', () => {
-//     const currentTime = playlist[currentSongIndex].audio.currentTime
-//     const duration = playlist[currentSongIndex].audio.duration
-//     const progress = (currentTime / duration) * 100
-//     trackBar.value = progress
-// })
-// playlist[0].audio.addEventListener("ended", () => {
-//     if (!replayButton.classList.contains('static-replay')) {
-//         playlist.next()
-//     }
-//     playlist[currentSongIndex].play()
-// })
-// // playlist[0].audio.load()
-// // if (playlist[0].video !== undefined) {
-// //     playlist[0].video.load()
-// // }
-// for (let element of playlist) {
-//     // element.audio.load()
-//     // if (element.video !== undefined) {
-//     //     element.video.load()
-//     // }
-//     element.audio.addEventListener('timeupdate', () => {
-//         const currentTime = playlist[currentSongIndex].audio.currentTime
-//         const duration = playlist[currentSongIndex].audio.duration
-//         const progress = (currentTime / duration) * 100
-//         trackBar.value = progress
-//     })
-//     element.audio.addEventListener('volumechange', () => {
-//         volumeBar.value = playlist[currentSongIndex].audio.volume 
-//     })
-//     element.audio.addEventListener('volumechange', () => {
-//         mobileVolumeBar.value = playlist[currentSongIndex].audio.volume 
-//     })
-//     element.audio.addEventListener("ended", () => {
-//         if (!replayButton.classList.contains('static-replay')) {
-//             playlist.next()
-//         }
-//         playlist[currentSongIndex].play()
-//     })
-// }
 
 forwardButton.addEventListener('click', function() {
     playlist.next()
@@ -404,9 +338,7 @@ for (let elementIndex = 0; elementIndex < trackListElements.length; ++elementInd
         playlist[currentSongIndex].play()
         if (playlist[currentSongIndex].video != undefined) {
             videoElement.play()
-            .then(() => {
-                console.log("video good " + playlist[currentSongIndex].title)
-            })
+            .then(() => {})
             .catch(error => {
                 console.log(error)
             })
