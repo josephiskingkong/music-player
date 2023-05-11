@@ -41,7 +41,7 @@ try {
     const response = await fetch('.\\assets\\songs.json');
     const data = await response.json();
     dataArray = data;
-}
+} 
 catch (error) {
     console.error(error);
 }
@@ -56,6 +56,8 @@ for (let songIndex = 0; songIndex < Object.keys(dataArray.songs).length; ++songI
     }
     songsArray.push(songObject)
 }
+
+console.log(songsArray)
 
 const playlist = {
     [Symbol.iterator]() {
@@ -185,11 +187,11 @@ function metaConfigure(oldIndex, newIndex) {
     } else {
         videoElement.classList.remove('hidden');
         if (playlist[currentSongIndex].video == undefined) {
-            const coverImageUrl = trackListCovers[newIndex].src
-            resizeImage(coverImageUrl, 1000, 1000, function (resizedImageUrl) {
-            currentCover[0].src = resizedImageUrl;
-            currentBackground[0].style.backgroundImage = 'url(' + resizedImageUrl + ')';
-            });
+            const coverImageUrl = trackListCovers[newIndex].src;
+resizeImage(coverImageUrl, 1000, 1000, function (resizedImageUrl) {
+  currentCover[0].src = resizedImageUrl;
+  currentBackground[0].style.backgroundImage = 'url(' + resizedImageUrl + ')';
+});
 
         } else {
             videoElement.src = playlist[currentSongIndex].video;
@@ -199,6 +201,12 @@ function metaConfigure(oldIndex, newIndex) {
     updateMediaSessionMetadata();
 
     playlist[currentSongIndex].audio.volume = volumeBar.value
+
+    if (playlist[currentSongIndex].text !== undefined) {
+        trackText.innerHTML =  getTextFromFile(playlist[currentSongIndex].text)
+    } else {
+        trackText.innerHTML = playlist[currentSongIndex].title + "<br>" + playlist[currentSongIndex].artist
+    }
 
     if (playlist[currentSongIndex].text !== undefined) {
         trackText.innerHTML =  getTextFromFile(playlist[currentSongIndex].text)
@@ -348,15 +356,14 @@ trackListButton.onclick = function() {
 
 for (let elementIndex = 0; elementIndex < trackListElements.length; ++elementIndex) {
     trackListElements[elementIndex].addEventListener('click', () => {
-        playlist[currentSongIndex].pause()
-        playlist[currentSongIndex].audio.currentTime = 0
-        metaConfigure(currentSongIndex, elementIndex % (Object.keys(playlist).length - 2))
-        playlist[currentSongIndex].play()
-        if (playlist[currentSongIndex].video != undefined) {
-            videoElement.play()
-        }
-        changeButtons()
-    })
+    playlist[currentSongIndex].pause()
+    playlist[currentSongIndex].audio.currentTime = 0
+    metaConfigure(currentSongIndex, elementIndex)
+    playlist[currentSongIndex].play()
+    if (playlist[currentSongIndex].video != undefined) {
+        videoElement.play()
+    }
+    changeButtons()})
 }
 
 document.addEventListener('click', function(event) {
