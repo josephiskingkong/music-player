@@ -406,6 +406,7 @@ input[type='range']:hover {
     display: flex;
     flex-direction: column;
     transition: all .2s ease-in;
+    z-index: 9999;
 }
 
 .mobile-menu-header {

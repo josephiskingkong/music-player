@@ -81,16 +81,17 @@ const playlist = {
         return this
     },
 
-    next() {
+    async next() {
         let done = false
+
         if (currentSongIndex === songsAmount - 1) {
             done = true
         }
 
+        paused = false
+
         if (!playlist[currentSongIndex].isPlaying) {
             paused = true
-        } else {
-            paused = false
         }
 
         if (shuffleButton.classList.contains('static')) {
@@ -100,33 +101,36 @@ const playlist = {
             }
             metaConfigure(currentSongIndex, newSongIndex)
             if (!paused) {
-                playlist[currentSongIndex].play()
+                await playlist[currentSongIndex].play()
             }
             return { done, value: playlist[currentSongIndex] }
         } else if (done) {
             newSongIndex = 0
             metaConfigure(currentSongIndex, newSongIndex)
             if (!paused) {
-                playlist[currentSongIndex].play()
+                await playlist[currentSongIndex].play()
             } 
             return { done: true }
         } else {
             newSongIndex = currentSongIndex + 1
             metaConfigure(currentSongIndex, newSongIndex)
+            for (let songIndex = 0; songIndex < Object.keys(dataArray.songs).length; ++songIndex) {
+                await playlist[songIndex].pause();
+            }
             if (!paused) {
-                playlist[currentSongIndex].play()
+                await playlist[currentSongIndex].play()
             }
             return { done, value: playlist[currentSongIndex] } 
         }
     },
 
-    previous() {
+    async previous() {
         if (!playlist[currentSongIndex].isPlaying) {
             paused = true
         } else {
             paused = false
         }
-        playlist[currentSongIndex].pause();
+        await playlist[currentSongIndex].pause();
         playlist[currentSongIndex].audio.currentTime = 0;
 
         if (shuffleButton.classList.contains('static')) {
@@ -141,7 +145,7 @@ const playlist = {
         }
         metaConfigure(currentSongIndex, newSongIndex)
         if (!paused) {
-            playlist[currentSongIndex].play()
+            await playlist[currentSongIndex].play()
         }
     }
 }
@@ -219,13 +223,21 @@ function metaConfigure(oldIndex, newIndex) {
         trackText.innerHTML = playlist[currentSongIndex].title + "<br>" + playlist[currentSongIndex].artist
     }
 
+    let isPlaying = false;
+
     if (!paused) {
         if (playlist[currentSongIndex].video != undefined) {
-            videoElement.play()
-            .then(() => {})
-            .catch(error => {
-                console.log(error)
-            })
+            if (!isPlaying) {
+                isPlaying = true;
+                videoElement.play()
+                .then(() => {
+                    isPlaying = false;
+                })
+                .catch(error => {
+                    isPlaying = false;
+                    console.log(error);
+                });
+            }
         }
     }
 }
