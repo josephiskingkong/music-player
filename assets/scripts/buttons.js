@@ -277,33 +277,43 @@ pauseButton.onclick = function() {
     changeButtons()
 }
 
-window.addEventListener('keypress', function (event) { // управление плейлистом кнопками
-    if (event.key === ' ') {
-        if (!playlist[currentSongIndex].isPlaying) {
-            playlist[currentSongIndex].play()
-            if (playlist[currentSongIndex].video != undefined) {
-                videoElement.play()
+window.addEventListener('keydown', function (event) { // управление плейлистом кнопками
+    switch(event.key) {
+        case ' ':
+            if (!playlist[currentSongIndex].isPlaying) {
+                playlist[currentSongIndex].play()
+                if (playlist[currentSongIndex].video != undefined) {
+                    videoElement.play()
+                }
+            } else {
+                playlist[currentSongIndex].pause()
+                if (playlist[currentSongIndex].video != undefined) {
+                    videoElement.pause()
+                }
             }
-        } else {
-            playlist[currentSongIndex].pause()
-            if (playlist[currentSongIndex].video != undefined) {
-                videoElement.pause()
+            changeButtons()
+            break;
+    case 'ArrowLeft':
+        playlist.previous();
+        break;
+    case 'ArrowRight':
+        playlist.next();
+    }
+})
+
+window.addEventListener('keypress', function(event) {
+    switch (event.key) {
+        case 's':
+            shuffleButton.classList.toggle('static');
+            break
+        case 'r':
+            replayButton.classList.toggle('static-replay');
+            if (playlist[currentSongIndex].audio.loop) {
+                playlist[currentSongIndex].audio.loop = false;
+            } else {
+                playlist[currentSongIndex].audio.loop = true;
             }
-        }
-        changeButtons()
-    } else if (event.key === 'k') {
-        playlist.previous()
-    } else if (event.key === 'l') {
-        playlist.next()
-    } else if (event.key === 'j') {
-        shuffleButton.classList.toggle('static')
-    } else if (event.key === ';') {
-        replayButton.classList.toggle('static-replay')
-        if (playlist[currentSongIndex].audio.loop) {
-            playlist[currentSongIndex].audio.loop = false
-        } else {
-            playlist[currentSongIndex].audio.loop = true
-        }
+            break;
     }
 })
 
